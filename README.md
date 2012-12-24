@@ -1,4 +1,4 @@
-#:UBIQ
+#UBIQ.
 > version 0.01 - unusable
 
 My take on ubiquitous computing....
