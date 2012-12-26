@@ -7,5 +7,6 @@ This contains the Arduino code for the IR receiver. All it does is output the he
 
 ##Instructions:
 >ino build
+
 >ino upload
 
