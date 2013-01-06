@@ -30,6 +30,10 @@ void setup()
 	pinMode(RELAY_B_PIN, OUTPUT);
 	pinMode(RELAY_C_PIN, OUTPUT);
 
+	digitalWrite(RELAY_A_PIN, HIGH);
+	digitalWrite(RELAY_B_PIN, HIGH);
+	digitalWrite(RELAY_B_PIN, HIGH);
+
 }
 
 void loop()
