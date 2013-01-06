@@ -25,6 +25,7 @@ var right = function(code){
 		console.log("right!");
 		return "c";
 	});
+}
 
 var play = function(code){
 	return _base(code, function(){
