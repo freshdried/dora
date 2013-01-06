@@ -18,7 +18,11 @@ function start(handle){
 			var num = parseInt(data, 16);
 			var cleannum = num % 0x10000 //cleaned so every button code is one value
 			if(typeof handle[cleannum] === 'function'){
-				handle[cleannum](num);
+				toserial = handle[cleannum](num);
+				if(null != toserial){
+					serialPort.write(toserial)
+				}
+
 			}else{
 				//console.log("No button handler found!"); //DEBUG
 				handle[0](num);
