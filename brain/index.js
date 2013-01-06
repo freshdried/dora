@@ -5,7 +5,7 @@ var buttonHandlers = require("./buttonhandlers");
 var phillips = {
 	'notimplemented': 0,
 	'left': 0x45A,
-	'right': 0x45B
+	'right': 0x45B,
 	'play': 0x45C,
 }
 
