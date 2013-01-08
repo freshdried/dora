@@ -20,6 +20,6 @@ var _toggle = function(write, triplet){
 }
 
 exports.toggleA = function(write){ _toggle(write, ['A','a']); }
-exports.toggleB = function(write){ _toggle(write, ['B','b']); }
+exports.toggleB = function(write){ _toggle(write, ['B','b']); _toggle(write, ['A','a']); _toggle(write, ['C','c']);}
 exports.toggleC = function(write){ _toggle(write, ['C','c']); }
 
