@@ -27,7 +27,7 @@ var start = function(handle){
 	});
 }
 
-var rawhandle(raw, handle){
+var rawhandle = function(raw, handle){
 	var code = raw % 0x10000 //cleaned so every button code is one value
 	if(typeof handle[code] === 'function'){
 		if(raw != lastraw){
