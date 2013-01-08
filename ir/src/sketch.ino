@@ -32,7 +32,7 @@ void setup()
 
 	digitalWrite(RELAY_A_PIN, HIGH);
 	digitalWrite(RELAY_B_PIN, HIGH);
-	digitalWrite(RELAY_B_PIN, HIGH);
+	digitalWrite(RELAY_C_PIN, HIGH);
 
 }
 
