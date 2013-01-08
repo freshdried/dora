@@ -12,7 +12,10 @@ var _toggle = function(write, triplet){
 	var p = triplet[0];
 	var message = triplet[state[p]];
 	console.log(message);
-	write(message);
+	write(message, function(err, results){
+	     console.log('err ' + err);
+	     console.log('results ' + results);
+	});
 	state[p] = state[p]^1; //toggle (xor 1)
 }
 
