@@ -3,7 +3,7 @@ This contains the Arduino code for the IR receiver. All it does is output the he
 
 ##Dependencies
 - ino (http://inotool.org/)
-- IRRemote in your arduino libraries (https://github.com/shirriff/Arduino-IRremote)
+- IRRemote in your Arduino libraries (https://github.com/shirriff/Arduino-IRremote)
 
 ##Instructions:
 >ino build
