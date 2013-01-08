@@ -5,10 +5,11 @@
 var serialport = require("serialport");
 var lastraw; //buffer to holder the last signaled button code
 
+var sp;
 
 var start = function(handle){
 	var SerialPort = serialport.SerialPort;
-	var sp = new SerialPort("/dev/ttyUSB0",{
+	sp = new SerialPort("/dev/ttyUSB0",{
 		parser: serialport.parsers.readline("\n"),
 		baudrate: 9600
 	});
