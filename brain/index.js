@@ -11,7 +11,7 @@ var r = REMOTE_PHILIPS_RC_5331;
 
 var handle = {}
 handle[r.LEFT] = bh.toggleA;
-handle[r.RIGHT] = bh.toggleB;
-handle[r.PLAY] = bh.toggleC;
+handle[r.PLAY] = bh.toggleB;
+handle[r.RIGHT] = bh.toggleC;
 
 server.start(handle);

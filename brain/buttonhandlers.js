@@ -10,7 +10,9 @@ state['C'] = HIGH;
 
 var _toggle = function(write, triplet){
 	var p = triplet[0];
-	write(triplet[state[p]]);
+	var message = triplet[state[p]];
+	console.log(message);
+	write(message);
 	state[p] = state[p]^1; //toggle (xor 1)
 }
 
