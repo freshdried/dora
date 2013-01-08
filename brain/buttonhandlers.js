@@ -1,40 +1,20 @@
-var lastcode; //buffer to holder the last signaled button code
-//Get rid of all the returns!!!
+var HIGH = 1;
+var LOW = 0;
 
-var _base = function(code, callback){
-	if(code != lastcode){
-		//callback();
-		return callback(); // DELETE THIS , NO RETRNS!!
-	}
-	lastcode = code;
-};
+var state = {};
+state['A'] = HIGH;
+state['B'] = HIGH;
+state['C'] = HIGH;
 
 
-var notimplemented = function(code){
-	_base(code, function(){});	//Do nothing
+
+var _toggle = function(write, triplet){
+	var p = triplet[0];
+	write(triplet[state[p]]);
+	state[p] = state[p]^1; //toggle (xor 1)
 }
 
-var left = function(code){
-	return _base(code, function(){
-		console.log("left!");
-		return "a";
-	});
-}
-var right = function(code){
-	return _base(code, function(){
-		console.log("right!");
-		return "c";
-	});
-}
+exports.toggleA = function(write){ _toggle(write, ['A','a']); }
+exports.toggleB = function(write){ _toggle(write, ['B','b']); }
+exports.toggleC = function(write){ _toggle(write, ['C','c']); }
 
-var play = function(code){
-	return _base(code, function(){
-		console.log("play!");
-		return "b";
-	});
-}
-
-exports.notimplemented = notimplemented;
-exports.left = left;
-exports.right = right;
-exports.play = play;

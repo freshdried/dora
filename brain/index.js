@@ -1,19 +1,17 @@
 var server = require("./server");
-var buttonHandlers = require("./buttonhandlers");
+var bh = require("./buttonhandlers");
 
-//object to hold button constants
-var phillips = {
-	'notimplemented': 0,
-	'left': 0x45A,
-	'right': 0x45B,
-	'play': 0x45C,
-}
+
+var REMOTE_PHILIPS_RC_5331 = {
+	'LEFT' : 0x45A,
+	'RIGHT' : 0x45B,
+	'PLAY' : 0x45C,
+};
+var r = REMOTE_PHILIPS_RC_5331;
 
 var handle = {}
-handle[phillips.notimplemented] = buttonHandlers.notimplemented;
-
-handle[phillips.left] = buttonHandlers.left;
-handle[phillips.right] = buttonHandlers.right;
-handle[phillips.play] = buttonHandlers.play;
+handle[r.LEFT] = bh.toggleA;
+handle[r.RIGHT] = bh.toggleB;
+handle[r.PLAY] = bh.toggleC;
 
 server.start(handle);

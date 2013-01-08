@@ -2,39 +2,41 @@
  * 
  */
 
-var serialport = require("serialport")
+var serialport = require("serialport");
+var lastraw; //buffer to holder the last signaled button code
 
-function start(handle){
+
+var start = function(handle){
 	var SerialPort = serialport.SerialPort;
-	var serialPort = new SerialPort("/dev/ttyUSB0",{
+	var sp = new SerialPort("/dev/ttyUSB0",{
 		parser: serialport.parsers.readline("\n"),
 		baudrate: 9600
 	});
 
-	serialPort.on("open", function(){
+	sp.on("open", function(){
 		console.log('open');
-		serialPort.on('data', function(data){
-			//console.log('data received: ' + data); //DEBUG
-			var num = parseInt(data, 16);
-			var cleannum = num % 0x10000 //cleaned so every button code is one value
-			if(typeof handle[cleannum] === 'function'){
-				toserial = handle[cleannum](num);
-				if(null != toserial){
-					serialPort.write(toserial)
-				}
-
-			}else{
-				//console.log("No button handler found!"); //DEBUG
-				handle[0](num);
-			}
+		sp.on('data', function(data){
+			var raw = parseInt(data, 16);
+			rawhandle(raw, handle, serialport);
 		});
 	});
 
 
-	serialPort.on("close", function(){
+	sp.on("close", function(){
 		console.log('close');
 	});
 }
+
+var rawhandle(raw, handle){
+	var code = raw % 0x10000 //cleaned so every button code is one value
+	if(typeof handle[code] === 'function'){
+		if(raw != lastraw){
+			handle[code](sp.write);
+		};
+	};
+	lastcode = code;
+}
+
 
 exports.start = start;
 
