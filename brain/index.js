@@ -37,7 +37,7 @@ var remote = REMOTE_PHILIPS_RC_5331;
 
 var handle ={ //Singleton
 	press: new function(){
-		this[remote.POWER] = process.exit;
+		[remote.POWER] = process.exit;
 
 		this[remote.OK] = relays.toggleAll;
 		this[remote.ONE] = relays.toggleA;
