@@ -39,7 +39,7 @@ handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
 handle[remote.SOUTH] = function(write){
-	for(int i = 0; i< 100; i ++){
+	for(var i = 0; i< 100; i ++){
 		relays.toggleC(write);
 	};
 };
