@@ -15,7 +15,6 @@ var start = function(handle){
 	});
 
 	sp.on("open", function(){
-		console.log('open');
 		sp.on('data', function(data){
 			var raw = parseInt(data, 16);
 			rawhandle(raw, handle, serialport);
