@@ -34,12 +34,21 @@ var REMOTE_PHILIPS_RC_5331 = {
 };
 var remote = REMOTE_PHILIPS_RC_5331;
 
+var delay = 20
+
 var handle = {};
 handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
+handle[remote.UP] = function(){
+	delay = delay + 5;
+};
+handle[remote.DOWN] = function(){
+	delay = delay - 5;
+};
 handle[remote.SOUTH] = function(write){
-	setInterval(relays.toggleC, 20, write);
+	var intervalid = setInterval(relays.toggleC, delay, write);
+	setTimer(clearInterval, 5000, intervalid);
 };
 
 handle[remote.POWER] = process.exit;
