@@ -34,22 +34,20 @@ var REMOTE_PHILIPS_RC_5331 = {
 };
 var remote = REMOTE_PHILIPS_RC_5331;
 
-var delay = 20
 
 var handle = {};
 handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
-handle[remote.UP] = function(){
-	delay = delay + 5;
-};
-handle[remote.DOWN] = function(){
-	delay = delay - 5;
-};
-handle[remote.SOUTH] = function(write){
-	var intervalid = setInterval(relays.toggleC, delay, write);
-	setTimeout(clearInterval, 5000, intervalid);
-};
+handle[remote.PLAY] = function(){
+	console.log('yay');
+	var spawn = require('child_process').spawn
+	spawn('mpg123', ' wakeup.mp3');
+}
+//handle[remote.SOUTH] = function(write){
+//	var intervalid = setInterval(relays.toggleC, delay, write);
+//	setTimeout(clearInterval, 5000, intervalid);
+//};
 
 handle[remote.POWER] = process.exit;
 
