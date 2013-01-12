@@ -44,8 +44,5 @@ handle[remote.THREE] = relays.toggleC;
 handle[remote.PLAY] = function(write){
 	spawn('mpg123', ['wakeup.mp3']);
 };
-var checktime = 
-
 
 ss.start(handle);
-var write = ss.write;
