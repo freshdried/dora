@@ -52,6 +52,12 @@ var handle = { //Singleton
 		};
 	},
 	hold: new function(){
+		this[remote.UP] = function(){
+			spawn('amixer', ['set', 'PCM', '5%+', '-M']);
+		};
+		this[remote.DOWN] = function(){
+			spawn('amixer', ['set', 'PCM', '5%-', '-M']);
+		};
 	},
 };
 
