@@ -37,11 +37,11 @@ var remote = REMOTE_PHILIPS_RC_5331;
 
 var handle = {
 	press: {
-		remote.POWER: process.exit,
-		remote.OK: relays.toggleAll,
-		remote.ONE: relays.toggleA,
-		remote.TWO: relays.toggleB,
-		remote.THREE: relays.toggleC,
+		'remote.POWER': process.exit,
+		'remote.OK': relays.toggleAll,
+		'remote.ONE': relays.toggleA,
+		'remote.TWO': relays.toggleB,
+		'remote.THREE': relays.toggleC,
 	},
 	hold: {
 	},
