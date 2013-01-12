@@ -39,7 +39,7 @@ handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
 handle[remote.SOUTH] = function(write){
-	setInterval(relays.toggleC, 1, write);
+	setInterval(relays.toggleC, 2, write);
 };
 
 handle[remote.POWER] = process.exit;
