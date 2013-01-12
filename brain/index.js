@@ -39,10 +39,16 @@ handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
 handle[remote.SOUTH] = function(write){
-	for(var i = 0; i< 100; i ++){
-		setTimeout(relays.toggleC,100,write);
-	};
+	for (var i = 0; i< 5; i++){
+		(
+		function(i){
+			setTimeout(function(){
+				relays.toggleA(write);
+			}, i);
+		}
+		)(i)};
 };
+
 handle[remote.POWER] = process.exit;
 
 server.start(handle);
