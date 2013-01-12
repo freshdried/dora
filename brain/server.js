@@ -6,7 +6,6 @@ var serialport = require("serialport");
 var lastraw; //buffer to holder the last signaled button code
 
 var sp;
-var started;
 
 var start = function(handle){
 	var SerialPort = serialport.SerialPort;
@@ -30,6 +29,7 @@ var start = function(handle){
 };
 
 var rawhandle = function(raw, handle){
+	console.log(raw)
 	var code = raw % 0x10000 //cleaned so every button code is one value
 	if(typeof handle[code] === 'function'){
 		if(raw != lastraw){
@@ -38,7 +38,7 @@ var rawhandle = function(raw, handle){
 			});
 		};
 	};
-	lastcode = code;
+	lastraw = raw;
 };
 
 
