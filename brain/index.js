@@ -1,4 +1,4 @@
-var server = require("./server"),
+var ss = require("./serialserver"),
     relays = require("./relays");
     spawn = require('child_process').spawn
 
@@ -47,5 +47,5 @@ handle[remote.PLAY] = function(write){
 var checktime = 
 
 
-
-server.start(handle);
+ss.start(handle);
+var write = ss.write;
