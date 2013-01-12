@@ -6,6 +6,7 @@ var serialport = require("serialport");
 var lastraw; //buffer to holder the last signaled button code
 
 var sp;
+var started;
 
 var start = function(handle){
 	var SerialPort = serialport.SerialPort;
@@ -26,7 +27,7 @@ var start = function(handle){
 	sp.on("close", function(){
 		console.log('close');
 	});
-}
+};
 
 var rawhandle = function(raw, handle){
 	var code = raw % 0x10000 //cleaned so every button code is one value
@@ -34,11 +35,11 @@ var rawhandle = function(raw, handle){
 		if(raw != lastraw){
 			handle[code](function(str){
 				sp.write(str);
-			})
+			});
 		};
 	};
 	lastcode = code;
-}
+};
 
 
 exports.start = start;
