@@ -37,7 +37,7 @@ var remote = REMOTE_PHILIPS_RC_5331;
 var handle = {};
 handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
-handle[remote.THREE] = relays.toggleB;
+handle[remote.THREE] = relays.toggleC;
 handle[remote.POWER] = process.exit;
 
 server.start(handle);
