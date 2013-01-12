@@ -3,8 +3,6 @@
  */
 
 var serialport = require("serialport");
-var lastraw; //buffer to holder the last signaled button code
-
 var sp;
 
 var start = function(handle){
@@ -27,10 +25,10 @@ var start = function(handle){
 	});
 };
 
+var lastraw; //buffer to holder the last signaled button code
 var rawhandle = function(raw, handle){
-	//console.log(raw)
-	var code = raw % 0x10000 //cleaned so every button code is one value
-	console.log(handle);
+	//we clean the code so every button has one value
+	var code = raw % 0x10000 
 	if(typeof handle.press[code] === 'function'){
 		if(raw != lastraw){
 			handle.press[code](function(str){
