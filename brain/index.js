@@ -37,14 +37,14 @@ var remote = REMOTE_PHILIPS_RC_5331;
 
 var handle = new function(){ //Singleton
 	this.press =  {};
-	press[remote.POWER] = process.exit;
+	this.press[remote.POWER] = process.exit;
 
-	press[remote.OK] = relays.toggleAll;
-	press[remote.ONE] = relays.toggleA;
-	press[remote.TWO] = relays.toggleB;
-	press[remote.THREE] = relays.toggleC;
+	this.press[remote.OK] = relays.toggleAll;
+	this.press[remote.ONE] = relays.toggleA;
+	this.press[remote.TWO] = relays.toggleB;
+	this.press[remote.THREE] = relays.toggleC;
 
-	press[remote.PLAY] = function(write){
+	this.press[remote.PLAY] = function(write){
 		spawn('mpg123', ['wakeup.mp3']);
 	}
 
