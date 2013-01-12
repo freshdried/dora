@@ -40,7 +40,7 @@ handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
 handle[remote.SOUTH] = function(write){
 	for(var i = 0; i< 100; i ++){
-		setTimeout(relays.toggleC,10,write);
+		setTimeout(relays.toggleC,100,write);
 	};
 };
 handle[remote.POWER] = process.exit;
