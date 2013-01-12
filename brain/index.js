@@ -35,17 +35,20 @@ var REMOTE_PHILIPS_RC_5331 = {
 };
 var remote = REMOTE_PHILIPS_RC_5331;
 
-var handle = {
-	press: {
-		'remote.POWER': process.exit,
-		'remote.OK': relays.toggleAll,
-		'remote.ONE': relays.toggleA,
-		'remote.TWO': relays.toggleB,
-		'remote.THREE': relays.toggleC,
-	},
-	hold: {
-	},
-}
+var handle = new function(){ //Singleton
+	this.press =  {};
+	press[remote.POWER] = process.exit;
 
+	press[remote.OK] = relays.toggleAll;
+	press[remote.ONE] = relays.toggleA;
+	press[remote.TWO] = relays.toggleB;
+	press[remote.THREE] = relays.toggleC;
+
+	press[remote.PLAY] = function(write){
+		spawn('mpg123', ['wakeup.mp3']);
+	}
+
+	this.hold={};
+};
 
 ss.start(handle);
