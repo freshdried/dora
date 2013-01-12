@@ -42,5 +42,4 @@ var rawhandle = function(raw, handle){
 
 
 exports.start = start;
-exports.write = sp.write;
 
