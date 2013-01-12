@@ -1,5 +1,6 @@
 var server = require("./server"),
     relays = require("./relays");
+    spawn = require('child_process').spawn
 
 
 var REMOTE_PHILIPS_RC_5331 = {
@@ -36,19 +37,15 @@ var remote = REMOTE_PHILIPS_RC_5331;
 
 
 var handle = {};
+handle[remote.POWER] = process.exit;
 handle[remote.ONE] = relays.toggleA;
 handle[remote.TWO] = relays.toggleB;
 handle[remote.THREE] = relays.toggleC;
-handle[remote.PLAY] = function(){
-	console.log('yay');
-	var spawn = require('child_process').spawn
+handle[remote.PLAY] = function(write){
 	spawn('mpg123', ['wakeup.mp3']);
 };
-//handle[remote.SOUTH] = function(write){
-//	var intervalid = setInterval(relays.toggleC, delay, write);
-//	setTimeout(clearInterval, 5000, intervalid);
-//};
+var checktime = 
 
-handle[remote.POWER] = process.exit;
+
 
 server.start(handle);
