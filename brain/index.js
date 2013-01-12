@@ -48,7 +48,7 @@ handle[remote.DOWN] = function(){
 };
 handle[remote.SOUTH] = function(write){
 	var intervalid = setInterval(relays.toggleC, delay, write);
-	setTimer(clearInterval, 5000, intervalid);
+	setTimeout(clearInterval, 5000, intervalid);
 };
 
 handle[remote.POWER] = process.exit;
