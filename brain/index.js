@@ -43,7 +43,7 @@ handle[remote.PLAY] = function(){
 	console.log('yay');
 	var spawn = require('child_process').spawn
 	spawn('mpg123', ['wakeup.mp3']);
-}
+};
 //handle[remote.SOUTH] = function(write){
 //	var intervalid = setInterval(relays.toggleC, delay, write);
 //	setTimeout(clearInterval, 5000, intervalid);
