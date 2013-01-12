@@ -30,12 +30,16 @@ var start = function(handle){
 var rawhandle = function(raw, handle){
 	//console.log(raw)
 	var code = raw % 0x10000 //cleaned so every button code is one value
-	if(typeof handle[code] === 'function'){
+	if(typeof handle.press[code] === 'function'){
 		if(raw != lastraw){
-			handle[code](function(str){
+			handle.press[code](function(str){
 				sp.write(str);
 			});
 		};
+	}else if(typeof handle.hold[code] === 'function'){
+		handle.hold[code](function(str){
+			sp.write(str);
+		});
 	};
 	lastraw = raw;
 };

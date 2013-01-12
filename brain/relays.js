@@ -27,9 +27,15 @@ var toggleB = function(write){
 var toggleC = function(write){
 	toggle(write, ['C','c']);
 };
+var toggleAll = function(write){
+	toggleA(write);
+	toggleB(write);
+	toggleC(write);
+};
 
 
 exports.toggleA = toggleA;
 exports.toggleB = toggleB;
 exports.toggleC = toggleC;
+exports.toggleAll = toggleAll;
 
