@@ -1,11 +1,11 @@
 var ss = require("./serialserver");
-//var alarm = require("./alarm");
+var alarm = require("./alarm");
 var relays = require("./relays");
 var spawn = require('child_process').spawn;
 
 
 var remote = require("./remotes/PHILIPS_RC_5331.js");
-console.log(remote);
+
 var remotehandle = { 
 	press: new function(){
 		this[remote.POWER] = process.exit;
@@ -16,7 +16,9 @@ var remotehandle = {
 		this[remote.THREE] = relays.toggleC;
 
 		this[remote.PLAY] = function(){
-			spawn('mpg123', ['wakeup.mp3']);
+			t = new alarm.timer(100, function(){
+				spawn('mpg123', ['wakeup.mp3'])
+			});
 		};
 		this[remote.MUTE] = function(){
 			spawn('amixer', ['set', 'PCM', 'togglemute']);

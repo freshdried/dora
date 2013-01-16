@@ -4,17 +4,20 @@ var util = require('util');
 //TODO: figure out how Date module works...
 // Also currently my alarm is really a timer.
 // Make it a
-var Alarm = function(time, callback){
+
+var timer = function(time, callback){
 	var self = this;
-	timediff = 0;// FIX
 	setTimeout(function(){
-		self.emit('ring', callback);
-	}, timediff);
+		self.emit('ring');
+	}, time);
+	self.on('ring', callback);
 
-	this.on('snooze', function(){
-		//extend alarm
-	});
 };
-util.inherits(Alarm, EventEmitter);
+util.inherits(timer, EventEmitter);
 
-module.exports = Alarm;
+//this.on('snooze', function(){
+//	//extend alarm
+//});
+
+
+exports.timer = timer
