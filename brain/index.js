@@ -4,7 +4,7 @@ var relays = require("./relays");
 var spawn = require('child_process').spawn;
 
 
-var remote = require("./remotes/PHILIPS_RC_5331.json");
+var remote = require("./remotes/PHILIPS_RC_5331.js");
 var remotehandle = { 
 	press: new function(){
 		this[remote.POWER] = process.exit;
