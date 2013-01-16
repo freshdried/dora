@@ -1,4 +1,5 @@
 ir/.build/
 brain/node_modules/
 brain/output.log
+*.swp
 
