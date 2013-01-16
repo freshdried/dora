@@ -5,6 +5,7 @@ var spawn = require('child_process').spawn;
 
 
 var remote = require("./remotes/PHILIPS_RC_5331.js");
+console.log(remote);
 var remotehandle = { 
 	press: new function(){
 		this[remote.POWER] = process.exit;
