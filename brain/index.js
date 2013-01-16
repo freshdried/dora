@@ -33,7 +33,8 @@ var remotehandle = {
 };
 
 var cronjobs = function(){
-	new cronjob('* * * * * *', function(){
+	new cronjob('00 45 11 * * 1-5', function(){
+		spawn('mpg123', ['wakeup.mp3']);
 		console.log('This message will appear every second');
 	},null, true); 
 }
