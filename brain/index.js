@@ -16,9 +16,7 @@ var remotehandle = {
 		this[remote.THREE] = relays.toggleC;
 
 		this[remote.PLAY] = function(){
-			t = new alarm.timer(1000, function(){
-				spawn('mpg123', ['wakeup.mp3'])
-			});
+			spawn('mpg123', ['wakeup.mp3']);
 		};
 		this[remote.MUTE] = function(){
 			spawn('amixer', ['set', 'PCM', 'togglemute']);
@@ -37,7 +35,7 @@ var remotehandle = {
 var cronjobs = function(){
 	new cronjob('* * * * * *', function(){
 		console.log('This message will appear every second');
-	},null, true, "America/New_York");
+	},null, true); 
 }
 
 ss.start(remotehandle);
