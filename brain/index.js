@@ -16,7 +16,7 @@ var remotehandle = {
 		this[remote.THREE] = relays.toggleC;
 
 		this[remote.PLAY] = function(){
-			t = new alarm.timer(100, function(){
+			t = new alarm.timer(1000, function(){
 				spawn('mpg123', ['wakeup.mp3'])
 			});
 		};
