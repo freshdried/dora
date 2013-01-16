@@ -1,5 +1,5 @@
 var ss = require("./serialserver");
-var alarm = require("./alarm");
+var cronjob = require("cron").CronJob;
 var relays = require("./relays");
 var spawn = require('child_process').spawn;
 
@@ -34,4 +34,11 @@ var remotehandle = {
 	},
 };
 
+var cronjobs = function(){
+	new cronjob('* * * * * *', function(){
+		console.log('This message will appear every second');
+	},null, true, "America/New_York");
+}
+
 ss.start(remotehandle);
+new cronjobs();
