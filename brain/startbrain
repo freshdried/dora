@@ -1,5 +1,5 @@
 #!/bin/bash
 while true; do
-    # Log stderror to a file 
+    # Log stdout to a file 
     node index.js> output.log
 done &
