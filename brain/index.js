@@ -4,7 +4,7 @@ var relays = require("./relays");
 var spawn = require('child_process').spawn;
 
 
-var remote = new require("./remotes/PHILIPS_RC_5331.js");
+var remote = require("./remotes/PHILIPS_RC_5331.js");
 console.log(remote);
 var remotehandle = { 
 	press: new function(){

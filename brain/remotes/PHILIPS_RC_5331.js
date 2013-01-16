@@ -28,3 +28,4 @@ var PHILIPS_RC_5331 = {
 	'SEAST' : 0x4E8,
 	'EAST' : 0x44E,
 };
+module.exports = PHILIPS_RC_5331;
