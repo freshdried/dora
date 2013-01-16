@@ -16,7 +16,7 @@ var remotehandle = {
 		this[remote.THREE] = relays.toggleC;
 
 		this[remote.PLAY] = function(){
-			spawn('mpg123', ['siren.mp3']);
+			spawn('mpg123', ['sounds/siren_alan.mp3']);
 		};
 		this[remote.MUTE] = function(){
 			spawn('amixer', ['set', 'PCM', 'togglemute']);
