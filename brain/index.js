@@ -33,12 +33,12 @@ var remotehandle = {
 };
 
 var cronjobs = function(){
-	new cronjob('00 45 11 * * 1-5', function(){
+	new cronjob('00 00 06 * * 1-5', function(){
 		spawn('mpg123', ['sounds/wake_alan.mp3']);
 	},null, true);
 
-	new cronjob('00 00 * * * *', function(){
-		spawn('mpg123', ['sounds/siren_alan.mp3']);
+	new cronjob('00 30 06 * * 1-5', function(){
+		spawn('mpg123', ['sounds/wake_alan.mp3']);
 	},null, true);
 }
 
