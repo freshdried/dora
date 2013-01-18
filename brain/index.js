@@ -15,31 +15,31 @@ var remotehandle = {
 		this[remote.TWO] = relays.toggleB;
 		this[remote.THREE] = relays.toggleC;
 
-		this[remote.PLAY] = function(){
-			spawn('mpg123', ['sounds/siren_alan.mp3']);
-		};
-		this[remote.MUTE] = function(){
-			spawn('amixer', ['set', 'PCM', 'togglemute']);
-		};
+		//this[remote.PLAY] = function(){
+		//	spawn('mpg123', ['sounds/siren_alan.mp3']);
+		//};
+		//this[remote.MUTE] = function(){
+		//	spawn('amixer', ['set', 'PCM', 'togglemute']);
+		//};
 	},
 	hold: new function(){
-		this[remote.UP] = function(){
-			spawn('amixer', ['set', 'PCM', '5%+', '-M']);
-		};
-		this[remote.DOWN] = function(){
-			spawn('amixer', ['set', 'PCM', '5%-', '-M']);
-		};
+		//this[remote.UP] = function(){
+		//	spawn('amixer', ['set', 'PCM', '5%+', '-M']);
+		//};
+		//this[remote.DOWN] = function(){
+		//	spawn('amixer', ['set', 'PCM', '5%-', '-M']);
+		//};
 	},
 };
 
 var cronjobs = function(){
-	new cronjob('00 00 06 * * 1-5', function(){
-		spawn('mpg123', ['sounds/wake_alan.mp3']);
-	},null, true);
+	//new cronjob('00 00 06 * * 1-5', function(){
+	//	spawn('mpg123', ['sounds/wake_alan.mp3']);
+	//},null, true);
 
-	new cronjob('00 30 06 * * 1-5', function(){
-		spawn('mpg123', ['sounds/wake_alan.mp3']);
-	},null, true);
+	//new cronjob('00 30 06 * * 1-5', function(){
+	//	spawn('mpg123', ['sounds/wake_alan.mp3']);
+	//},null, true);
 }
 
 ss.start(remotehandle);
