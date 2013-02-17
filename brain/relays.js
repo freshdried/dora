@@ -1,10 +1,24 @@
-var HIGH = 1;
-var LOW = 0;
+var fs = require('fs');
+
+var ON = 1;
+var OFF = 0;
 
 var state = {};
-state['A'] = HIGH;
-state['B'] = HIGH;
-state['C'] = HIGH;
+state['A'] = ON;
+state['B'] = ON;
+state['C'] = ON;
+
+var lightlog = function(){
+	var entry = 
+		(new Date()).getTime() +
+		" " + state['A'] +
+		" " + state['B'] +
+		" " + state['C'] ;
+
+	fs.appendFile('light.log', entry, function(err){
+		if(err) throw err;
+	});
+}
 
 
 var toggle = function(write, triplet){

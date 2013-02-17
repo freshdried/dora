@@ -1,6 +1,6 @@
-#UBIQ.
+#BIQ.
 my take on ubiquitous computing....
 
-#TODO:
-implement mini websever 
+#todo
+	implement mini websever 
 
