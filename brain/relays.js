@@ -10,12 +10,11 @@ for( var a in lights){
 	state[lights[a]] = ON;
 }
 state['anylight'] = ON;
-console.log(state);
 
 var lightlog = function(){
 	var tempany = new function(){
 		for (var a in lights){
-			if (state[a[lights]])
+			if (state[lights[a]])
 				return 1;
 		}
 		return 0;
