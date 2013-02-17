@@ -10,13 +10,15 @@ state['C'] = ON;
 state['any'] = ON;
 
 var lightlog = function(){
-	var entry = 
-		(new Date()).getTime() +
-		" " + state['any'] + "\n";
-
-	fs.appendFile('light.log', entry, function(err){
-		if(err) throw err;
-	});
+	var tempany = state['A'] | state['B'] | state['C'];
+	if (tempany !== state['any']){
+		var entry = 
+			(new Date()).getTime() +
+			" " + state['any'] + "\n";
+		fs.appendFile('light.log', entry, function(err){
+			if(err) throw err;
+		});
+	}
 }
 
 
@@ -29,7 +31,6 @@ var toggle = function(write, triplet){
 	     console.log('results ' + results);
 	});
 	state[p] = state[p]^1; //toggle (xor 1)
-	state['any'] = state['A'] | state['B'] | state['C'];
 	lightlog();
 };
 
