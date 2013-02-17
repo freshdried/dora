@@ -13,7 +13,7 @@ var lightlog = function(){
 		(new Date()).getTime() +
 		" " + state['A'] +
 		" " + state['B'] +
-		" " + state['C'] ;
+		" " + state['C'] + '\n';
 
 	fs.appendFile('light.log', entry, function(err){
 		if(err) throw err;
