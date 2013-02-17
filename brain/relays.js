@@ -7,9 +7,10 @@ var state = {};
 
 var lights = ['A','B','C']
 for( var a in lights){
-	state[a[lights]] = ON;
+	state[lights[a]] = ON;
 }
 state['anylight'] = ON;
+console.log(state);
 
 var lightlog = function(){
 	var tempany = new function(){
