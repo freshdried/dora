@@ -29,7 +29,7 @@ var toggle = function(write, triplet){
 	     console.log('results ' + results);
 	});
 	state[p] = state[p]^1; //toggle (xor 1)
-	state[any] = state['A'] | state['B'] | state['C'];
+	state['any'] = state['A'] | state['B'] | state['C'];
 	lightlog();
 };
 
