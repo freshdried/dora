@@ -30,6 +30,8 @@ var lightlog = function(){
 	}
 }
 
+lightlog();
+
 
 var toggle = function(write, triplet){
 	var p = triplet[0];
