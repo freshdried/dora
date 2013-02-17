@@ -11,7 +11,9 @@ state['any'] = ON;
 
 var lightlog = function(){
 	var tempany = state['A'] | state['B'] | state['C'];
+	console.log(tempany + "   " + state['any']);
 	if (tempany !== state['any']){
+		state['any'] = tempany;
 		var entry = 
 			(new Date()).getTime() +
 			" " + state['any'] + "\n";
