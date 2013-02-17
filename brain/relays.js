@@ -7,13 +7,12 @@ var state = {};
 state['A'] = ON;
 state['B'] = ON;
 state['C'] = ON;
+state['any'] = ON;
 
 var lightlog = function(){
 	var entry = 
 		(new Date()).getTime() +
-		" " + state['A'] +
-		" " + state['B'] +
-		" " + state['C'] + '\n';
+		" " + state['any'] + "\n";
 
 	fs.appendFile('light.log', entry, function(err){
 		if(err) throw err;
@@ -30,6 +29,7 @@ var toggle = function(write, triplet){
 	     console.log('results ' + results);
 	});
 	state[p] = state[p]^1; //toggle (xor 1)
+	state[any] = state['A'] | state['B'] | state['C'];
 	lightlog();
 };
 
