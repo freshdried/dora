@@ -30,6 +30,7 @@ var toggle = function(write, triplet){
 	     console.log('results ' + results);
 	});
 	state[p] = state[p]^1; //toggle (xor 1)
+	lightlog();
 };
 
 var toggleA = function(write){
