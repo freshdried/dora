@@ -9,7 +9,7 @@ var lights = ['A','B','C']
 for( var a in lights){
 	state[lights[a]] = ON;
 }
-state['anylight'] = ON;
+state['anylight'] = OFF;
 
 var lightlog = function(){
 	var tempany = OFF;
