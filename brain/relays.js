@@ -7,7 +7,8 @@ var state = {};
 state['A'] = ON;
 state['B'] = ON;
 state['C'] = ON;
-state['any'] = ON;
+state['any'] = OFF;
+
 
 var lightlog = function(){
 	var tempany = state['A'] | state['B'] | state['C'];
@@ -22,6 +23,8 @@ var lightlog = function(){
 		});
 	}
 }
+
+lightlog();
 
 
 var toggle = function(write, triplet){
