@@ -12,13 +12,11 @@ for( var a in lights){
 state['anylight'] = ON;
 
 var lightlog = function(){
-	var tempany = new function(){
-		for (var a in lights){
-			if (state[lights[a]])
-				return 1;
-		}
-		return 0;
-	};
+	var tempany = OFF;
+	for (var a in lights){
+		if (state[lights[a]])
+			tempany = ON;
+	}
 	if (tempany !== state['anylight']){
 		state['anylight'] = tempany;
 		var entry = 
