@@ -4,17 +4,26 @@ var ON = 1;
 var OFF = 0;
 
 var state = {};
-state['A'] = ON;
-state['B'] = ON;
-state['C'] = ON;
-state['any'] = ON;
+
+var lights = ['A','B','C']
+for( var a in lights){
+	state[a[lights]] = ON;
+}
+state['anylight'] = ON;
 
 var lightlog = function(){
-	var tempany = state['A'] | state['B'] | state['C'];
-	if (tempany !== state['any']){
+	var tempany = new function(){
+		for (var a in lights){
+			if (state[a[lights]])
+				return 1;
+		}
+		return 0;
+	};
+	if (tempany !== state['anylight']){
+		state['anylight'] = tempany;
 		var entry = 
 			(new Date()).getTime() +
-			" " + state['any'] + "\n";
+			" " + state['anylight'] + "\n";
 		fs.appendFile('light.log', entry, function(err){
 			if(err) throw err;
 		});
