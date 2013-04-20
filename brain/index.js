@@ -26,6 +26,7 @@ var remotehandle = {
 		this[remote.SOUTH] = function(){
 			var date = new Date()
 			var str = (parseInt(date.getHours()) % 12).toString() + ' ' + date.getMinutes().toString();
+			str = str ? str.split('')[3] == '0' : str.substring(0,3) + 'o' + str.substring(4);
 			exec("echo it is " + str + "|espeak --stdout | aplay", 
 			     function(error, stdout, stderr){
 			});
