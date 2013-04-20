@@ -2,6 +2,7 @@ var ss = require("./serialserver");
 var cronjob = require("cron").CronJob;
 var relays = require("./relays");
 var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 
 
 var remote = require("./remotes/PHILIPS_RC_5331.js");
@@ -23,6 +24,10 @@ var remotehandle = {
 		//};
 		this[remote.SOUTH] = function(){
 			spawn('echo', ["it is $(date + '%I %M')|espeak --stdout | aplay"]);
+			exec("echo it is $(date + '%I %M')|espeak --stdout | aplay", 
+			     function(error, stdout, stderr){
+				     console.log(stdout);
+			});
 		};
 	},
 	hold: new function(){
