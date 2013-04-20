@@ -27,7 +27,7 @@ var remotehandle = {
 			var date = new Date()
 			var str = (parseInt(date.getHours()) % 12).toString() + ' ' + date.getMinutes().toString();
 			str = str.split('')[3] == '0' ? str.substring(0,3) + 'o' + str.substring(4) : str;
-			exec("echo it is " + str + "|espeak --stdout | aplay", 
+			exec("echo it is " + str + "|espeak --stdout -s 120| aplay", 
 			     function(error, stdout, stderr){
 			});
 		};
