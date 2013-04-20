@@ -22,12 +22,12 @@ var remotehandle = {
 		//this[remote.MUTE] = function(){
 		//	spawn('amixer', ['set', 'PCM', 'togglemute']);
 		//};
+		
 		this[remote.SOUTH] = function(){
 			var date = new Date()
 			var str = (parseInt(date.getHours()) % 12).toString() + ' ' + date.getMinutes().toString();
 			exec("echo it is " + str + "|espeak --stdout | aplay", 
 			     function(error, stdout, stderr){
-				     console.log(stdout);
 			});
 		};
 	},

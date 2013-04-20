@@ -34,7 +34,7 @@ lightlog();
 var toggle = function(write, triplet){
 	var p = triplet[0];
 	var message = triplet[state[p]];
-	console.log(message);
+	//console.log(message);
 	write(message, function(err, results){
 	     console.log('err ' + err);
 	     console.log('results ' + results);
