@@ -23,7 +23,9 @@ var remotehandle = {
 		//	spawn('amixer', ['set', 'PCM', 'togglemute']);
 		//};
 		this[remote.SOUTH] = function(){
-			exec("echo it is `date + '%I %M'`|espeak --stdout | aplay", 
+			var date = new Date()
+			var str = (parseInt(date.getHours()) % 12).toString() + ' ' + date.getMinutes().toString();
+			exec("echo it is " + str + "|espeak --stdout | aplay", 
 			     function(error, stdout, stderr){
 				     console.log(stdout);
 			});
