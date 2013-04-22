@@ -37,7 +37,7 @@ var remotehandle = {
 				if(!error && response.statusCode == 200){
 					var last = JSON.parse(body)['return']['last']['display_short'].toString().substring(1);
 					str = last + ' dollars';
-					exec('echo ' + str + "|espeak --stdout -s 120| aplay", 
+					exec('echo ' + str + "|espeak --stdout -s 180| aplay", 
 					     function(error, stdout, stderr){
 					});
 				}
