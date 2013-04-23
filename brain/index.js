@@ -24,18 +24,27 @@ var remotehandle = {
 		//	spawn('amixer', ['set', 'PCM', 'togglemute']);
 		//};
 		
+	        // Say current time
 		this[remote.SOUTH] = function(){
 			var date = new Date()
-			var str = (parseInt(date.getHours()) % 12).toString() + ' ' + date.getMinutes().toString();
-			str = str.split('')[3] == '0' ? str.substring(0,3) + 'o' + str.substring(4) : str;
-			exec("echo it is " + str + "|espeak --stdout -s 120| aplay", 
+			var hours = (parseInt(date.getHours()) % 12).toString()
+			hours = hours != "0" ? hours : "12";
+
+			var minutes = date.getMinutes().toString();
+			if (minutes == '0'){
+				minutes = 'o clock';
+			}else if (minutes.length == 1){
+				minutes = "o" + minutes;
+			}
+			exec("echo it is " + hours + ' ' + minutes + "|espeak --stdout| aplay", 
 			     function(error, stdout, stderr){
 			});
 		};
+		// Say last bitcoin price in USD on MtGox
 		this[remote.SWEST] = function(){
 			request('http://data.mtgox.com/api/1/BTCUSD/ticker', function(error, response, body){
 				if(!error && response.statusCode == 200){
-					var last = JSON.parse(body)['return']['last']['display_short'].toString().substring(1);
+					var last = JSON.parse(body)['return']['last_local']['display_short'].toString().substring(1);
 					str = last + ' dollars';
 					exec('echo ' + str + "|espeak --stdout -s 180| aplay", 
 					     function(error, stdout, stderr){
