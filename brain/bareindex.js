@@ -9,13 +9,6 @@ var request = require('request');
 var remote = require("./remotes/PHILIPS_RC_5331.js");
 
 var remotehandle = { 
-	//Handler object
-	//
-	//Contains press and hold objects, which each contain
-	//  functions for each button
-	//
-	//press takes precedence over hold:
-	//If press.BUTTON exists, then hold.BUTTON will be ignored
 	press: new function(){
 		this[remote.POWER] = process.exit;
 
@@ -24,12 +17,6 @@ var remotehandle = {
 		this[remote.TWO] = relays.toggleB;
 		this[remote.THREE] = relays.toggleC;
 
-		//this[remote.PLAY] = function(){
-		//	spawn('mpg123', ['sounds/siren_alan.mp3']);
-		//};
-		//this[remote.MUTE] = function(){
-		//	spawn('amixer', ['set', 'PCM', 'togglemute']);
-		//};
 		
 	        // Say current time
 		this[remote.SOUTH] = function(){
@@ -71,14 +58,14 @@ var remotehandle = {
 };
 
 var cronjobs = function(){
-	//new cronjob('00 00 06 * * 1-5', function(){
-	//	spawn('mpg123', ['sounds/wake_alan.mp3']);
-	//},null, true);
+	new cronjob('00 00 06 * * 1-5', function(){
+		spawn('mpg123', ['sounds/wake_alan.mp3']);
+	},null, true);
 
-	//new cronjob('00 30 06 * * 1-5', function(){
-	//	spawn('mpg123', ['sounds/wake_alan.mp3']);
-	//},null, true);
+	new cronjob('00 30 06 * * 1-5', function(){
+		spawn('mpg123', ['sounds/wake_alan.mp3']);
+	},null, true);
 }
 
 ss.start(remotehandle);
-new cronjobs();
+//new cronjobs();

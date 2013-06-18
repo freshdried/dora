@@ -1,11 +1,6 @@
 #include "IRremote.h"
 
 /*
- * IR2SS2R - IR2Serial+Serial2Realy
- *
- * 01/63/12
- * Sean Lee
- *
  * Gets IR signal from DVD player remote (Phillips RC-5331)
  * Cleans it up a bit
  * Sends it to serial, with human-readable hex values
@@ -44,9 +39,12 @@ void loop()
 		int cmd = Serial.read();
 		switch(cmd)
 		{
+			//UPPERCASE: HIGH
 			case 'A': digitalWrite(RELAY_A_PIN, HIGH); break;
 			case 'B': digitalWrite(RELAY_B_PIN, HIGH); break;
 			case 'C': digitalWrite(RELAY_C_PIN, HIGH); break;
+			
+			//lowercase: low
 			case 'a': digitalWrite(RELAY_A_PIN, LOW); break;
 			case 'b': digitalWrite(RELAY_B_PIN, LOW); break;
 			case 'c': digitalWrite(RELAY_C_PIN, LOW); break;
@@ -60,7 +58,7 @@ void loop()
 	if(irrecv.decode(&results))
 	{
 		long out = results.value;
-		if(out > 0 && out < 131072)
+		if(out > 0 && out < 131072) //filter out noise
 		{
 			Serial.println(out, HEX);
 		}
