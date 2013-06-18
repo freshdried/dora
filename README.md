@@ -1,15 +1,25 @@
-#UBIQ.
-my take on ubiquitous computing....
+#living-space
+Transforms a living space into "living" space (living as in "alive").
 
-Hmm I should rename this project.
-
-Actually, my take on the prothestization of a living space.
+My take on Ubiquitous Computing in a room.
 
 
-#Todo
-- Document goals and stuff
-- Take a picture of myself every 20 minutes when the lights are on...
--	save photos to flash drive
-- Fix '12:03' as 'zero three'
-- Fix bitcoin ticker to be more real time
+##Goals
+The first goal of this project is __Prosthetization__
+	- An attempt to harness a living space as a prosthetic, or a tool: _an extension of the user_
+	- In other words, an attempt to make my life easier
+	- Sensory, physical data is collected, (visualized,) and made available _to the user_
+
+The second goal of this project is __Intelligence__
+	- An attempt to enable a room to act _for the user_
+	- In other words, an attempt to make my life _even_ easier
+	- Sensory, physical data is collected, processed, and acted upon _for the user_
+
+
+##Todo
+- create motor.js and sensory.js
+- Finish documentation
+- Minor fixes:
+	- Fix '12:03' as 'zero three'
+	- Fix bitcoin ticker to be more real time
 

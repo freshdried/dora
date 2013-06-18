@@ -13,6 +13,8 @@ Hub for incoming, sensory data and outgoing
 
 > node index.js
 
+
+
 #Remake
  - Split brain to two applications, with two arduinos
  	- sensory.js (physical to computer)
@@ -26,9 +28,9 @@ Hub for incoming, sensory data and outgoing
 	- webservice to lights
 		- Stimuli: http requests
 		- Reflex: lights
+
 #TODO
  - Document/comment with (docstrings? idk?)
- - Comment code so it is clear whether it is to or from hardware
  - Move bitcoin/date stuff to separate applications, and make brain spawn them
  - Get rid of cronjobs, they don't belong here!!
  - Make an http webservice for lights
