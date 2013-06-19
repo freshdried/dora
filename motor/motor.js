@@ -3,9 +3,9 @@ var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 	parser: serialport.parsers.readline("\n"),
 	baudrate: 9600
 });
-
-sp.on("open", function(){
-	var Relay = function(letter){
+//TODO: Add some inheritance from a general device object
+var device = {
+	Relay: function(letter){
 		//private
 		this.messages = [letter.toLowerCase(), letter.toUpperCase()];
 		this.state = this.messages.indexOf(letter);
@@ -26,13 +26,14 @@ sp.on("open", function(){
 			on: function(){ self.write(1) },
 			off: function(){ self.write(0) },
 		}
+	},
+};
 
-		
-	}
+sp.on("open", function(){
 	var relays = {
-		'a': new Relay('A'),
-		'b': new Relay('B'),
-		'c': new Relay('C'),
+		'a': new device.Relay('A'),
+		'b': new device.Relay('B'),
+		'c': new device.Relay('C'),
 	}
 
 	//read just in case
