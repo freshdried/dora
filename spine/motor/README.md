@@ -5,7 +5,7 @@ Connects computer to physical world
 ###limbs
 1. Mains Relays (3)
 	- __INPUT__: 'A', 'B', or 'C' via Serial
-	- __OUTPUT__: respective relay turns _ON_
+	- __OUTPUT__: respective relay turns _ON_<br>
 	- __INPUT__: 'a', 'b', or 'c' via Serial
 	- __OUTPUT__: respective relay turns _OFF_
 	
