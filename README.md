@@ -16,7 +16,7 @@ Ubiquitous Computing in a room.
 	- Sensory, physical data is collected, processed, and acted upon _for the user_
 
 
-#Remake
+##Remake
  - Split brain to two applications, with two arduinos
  	- sensory.js (physical to computer)
 		- Arduino to websocket
@@ -32,8 +32,5 @@ Ubiquitous Computing in a room.
 
 ##Todo
 - create sensory.js
+- Consolidate READMEs
 - Finish documentation
-- Minor fixes:
-	- Fix '12:03' as 'zero three'
-	- Fix bitcoin ticker to be more real time
-
