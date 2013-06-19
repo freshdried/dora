@@ -31,6 +31,4 @@ Ubiquitous Computing in a room.
 		- Reflex: lights
 
 ##Todo
-- create sensory.js
-- Consolidate READMEs
 - Finish documentation

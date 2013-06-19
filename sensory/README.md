@@ -1,23 +1,23 @@
-##sensory.ino
+##sensory
 Connects physical world to computer
 
-###Senses:
+###senses
 1. IR Signals
-	- __INPUT__: IR signal from a remote (Phillips RC-5331) via the [IRRemote library](https://gihub.com/shirrif/Arduino-Irremote)
-	- __OUTPUT__: hex value via serial
+	- IR signal from a remote (Phillips RC-5331)
 
-###Dependencies
-- ino (http://inotool.org/)
-- IRRemote in your Arduino libraries (https://github.com/shirriff/Arduino-IRremote)
+###dependencies
+- [node-serialport](https://github.com/voodootikigod/node-serialport)
+- [IRRemote](https://github.com/shirriff/Arduino-IRremote) in your Arduino libraries
 
-###Instructions:
->_in this directory..._
+###install and run
+> upload sensory.ino to arduino
 
->ino build
+> npm install serialport
 
->ino upload
+> node sensory.js
 
-###TODO:
+###TODO
+ - implement websocket
  - Think about additional senses
 
 

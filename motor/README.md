@@ -1,40 +1,23 @@
-##motor.ino
+##motor
 
 Connects computer to physical world
 
-###limbs
+###current controls
 1. Mains Relays (3)
-	- __INPUT__: 'A', 'B', or 'C' via Serial
-	- __OUTPUT__: respective relay turns _ON_
-	- __INPUT__: 'a', 'b', or 'c' via Serial
-	- __OUTPUT__: respective relay turns _OFF_
-	
+	- Turn AC circuits on and off
 	
 
-###Dependencies
-- ino (http://inotool.org/)
-
-###Instructions:
->_in this directory..._
-
->ino build
-
->ino upload
-
-###TODO
- - Add pictures
- - Include wiring diagrams, give credit to glacialwanderer
-##motor.js
-
-###Dependencies
-- node-serialport (https://github.com/voodootikigod/node-serialport)
+###dependencies
+- [node-serialport](https://github.com/voodootikigod/node-serialport)
 
 ###install and run
-> _in this directory_
+> upload motor.ino to arduino
 
 > npm install serialport
 
-> node index.js
+> node motor.js
 
 ###TODO
  - On reset, make lights last configuration
+ - Add pictures
+ - Include wiring diagrams, give credit to glacialwanderer
