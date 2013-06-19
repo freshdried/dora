@@ -1,7 +1,5 @@
 var serialport = require("serialport");
-
-var SerialPort = serialport.SerialPort;
-var sp = new SerialPort("/dev/ttyUSB0",{
+var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 	parser: serialport.parsers.readline("\n"),
 	baudrate: 9600
 });
