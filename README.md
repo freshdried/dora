@@ -1,7 +1,7 @@
 #living-space
 Transforms a living space into "living" space (living as in "alive").
 
-My take on Ubiquitous Computing in a room.
+Ubiquitous Computing in a room.
 
 
 ##Goals

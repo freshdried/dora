@@ -1,6 +1,5 @@
 */node_modules/
 *.log
 *.swp
-spine/motor/.build/
-spine/sensory/.build/
+*/.build/
 
