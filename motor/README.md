@@ -24,3 +24,17 @@ Connects computer to physical world
 ###TODO
  - Add pictures
  - Include wiring diagrams, give credit to glacialwanderer
+##motor.js
+
+###Dependencies
+- node-serialport (https://github.com/voodootikigod/node-serialport)
+
+###install and run
+> _in this directory_
+
+> npm install serialport
+
+> node index.js
+
+###TODO
+ - On reset, make lights last configuration
