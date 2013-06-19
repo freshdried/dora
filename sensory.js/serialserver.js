@@ -7,7 +7,7 @@ var sp;
 
 var start = function(handle){
 	var SerialPort = serialport.SerialPort;
-	sp = new SerialPort("/dev/ttyUSB0",{
+	sp = new SerialPort("/dev/ttyACM0",{
 		parser: serialport.parsers.readline("\n"),
 		baudrate: 9600
 	});
@@ -15,7 +15,7 @@ var start = function(handle){
 	sp.on("open", function(){
 		sp.on('data', function(data){
 			var raw = parseInt(data, 16);
-			rawhandle(raw, handle, serialport);
+			rawhandle(raw, handle);
 		});
 	});
 
