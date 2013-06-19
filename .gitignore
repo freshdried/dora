@@ -2,4 +2,6 @@ brain/node_modules/
 brain/output.log
 brain/light.log
 *.swp
+spine/motor/.build/
+spine/sensory/.build/
 
