@@ -2,4 +2,5 @@
 *.log
 *.swp
 */.build/
+*/.build/lib
 
