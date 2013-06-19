@@ -8,7 +8,7 @@ Ubiquitous Computing in a room.
 - The first goal of this project is __Prosthetization__
 	- An attempt to harness a living space as a prosthetic, or a tool: _an extension of the user_
 	- In other words, an attempt to make my life easier
-	- Sensory, physical data is collectedlected, (visualized,) and made available _to the user_
+	- Sensory, physical data is collected, (visualized,) and made available _to the user_
 
 - The second goal of this project is __Intelligence__
 	- An attempt to enable a room to act _for the user_
