@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>motor.js: socket.io test</title>
+<script src="./node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+<style type="text/css">
+body{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#log {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: #252726;
+	color:#D8D8D8;
+}
+</style>
+</head>
+<body>
+
+<pre id="log">Waiting...
+</pre>
+
+<script>
+var socket = io.connect('http://localhost:8081/');
+
+var write = new function(){
+	var node = document.getElementById("log");
+	return function(data){
+		node.innerHTML += JSON.stringify(data, undefined, 2);
+		node.innerHTML += '\n';
+		node.scrollTop = node.scrollHeight;
+	}
+}
+
+
+
+socket.on('welcome', function(data){
+	write(data);
+});
+
+socket.on('message', function(data){
+	write(data);
+});
+
+</script>
+</body>
+</html>

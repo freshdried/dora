@@ -84,7 +84,10 @@ sp.on("open", function(){
 	}
 
 	io.sockets.on('connection', function(socket){
-		socket.emit('welcome', devicelist);
+		socket.emit('welcome', {
+			"text": "Connect to one of these devices",
+			"devicelist": devicelist
+		});
 		
 	});
 	sp.on('data', function(data){

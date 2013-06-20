@@ -1,42 +1,57 @@
 var serialport = require("serialport");
+var io = require("socket.io").listen(8081);
+
 var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 	parser: serialport.parsers.readline("\n"),
 	baudrate: 9600
 });
-//TODO: Add some inheritance from a general device object
-var device = {
-	Relay: function(letter){
-		//private
-		this.messages = [letter.toLowerCase(), letter.toUpperCase()];
-		this.state = this.messages.indexOf(letter);
-		this.write = function(newstate){
-			sp.write(this.messages[newstate]);
-			//console.log(newstate);
-			//Log to external file
-			this.state = newstate;
-		}
-		this.write(this.state); //initial state
-		var self = this;
-		console.log(this.messages);
 
-		//public
-		return {
-			getstate: function(){ return self.state },
-			toggle: function(){ self.write(self.state^1) },
-			on: function(){ self.write(1) },
-			off: function(){ self.write(0) },
-		}
-	},
-};
+//TODO: Add some inheritance from a general device object
 
 sp.on("open", function(){
-	var relays = {
-		'a': new device.Relay('A'),
-		'b': new device.Relay('B'),
-		'c': new device.Relay('C'),
-	}
+	var Device = function(letter, info){
+		info = info || {};
+		this.type = 'Device';
+		this.name = info.name || "";
+		this.description = info.description || "";
+		this.location =  info.location || "";
+	};
+	//FIX PROTOTYPE STUFF
+	var Relay = function(letter, info){
+		//this.prototype = new Device(letter, info);
+		Relay.prototype = new Device(letter, info);
 
-	//read just in case
+		var messages = [letter.toLowerCase(), letter.toUpperCase()];
+		var state = messages.indexOf(letter);
+		var write = function(newstate){
+			sp.write(messages[newstate]);
+			//console.log(newstate);
+			//Log to external file
+			state = newstate;
+		};
+		write(state); //initial state
+		console.log(messages);
+
+		this.type =  'Relay';
+		this.getstate =  function(){ return state };
+		this.toggle =  function(){ write(state^1) };
+		this.on = function(){ write(1) };
+		this.off = function(){ write(0) };
+				
+	};
+	var devices = {
+		'a': new Relay('A'),
+		'b': new Relay('B'),
+		'c': new Relay('C'),
+	}
+	setInterval(function(){
+		devices.a.toggle();
+	}, 1000);
+	io.sockets.on('connection', function(socket){
+		socket.emit('welcome', "Hello World!");
+		socket.emit('welcome', devices);
+	});
+
 	sp.on('data', function(data){
 		console.log("SERIAL: " + data);
 	});

@@ -1,5 +1,5 @@
 {
 	"name": "motor",
 	"version": "0.0.0",
-	"dependencies": [ "serialport" ]
+	"dependencies": [ "serialport", "socket.io" ]
 }
