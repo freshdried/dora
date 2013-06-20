@@ -1,7 +1,5 @@
 /*
- * motor.ino
- *
- * (motor in the human sense, eg. "motor control", or "motor function")
+ * motor
  *
  * Computer to Physical interactions
  *

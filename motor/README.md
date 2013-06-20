@@ -13,7 +13,7 @@ Connects computer to physical world
 ###install and run
 > upload motor.ino to arduino
 
-> npm install serialport
+> npm install
 
 > node motor.js
 
