@@ -33,6 +33,9 @@ var write = new function(){
 		node.scrollTop = node.scrollHeight;
 	}
 }
+window.setInterval(function(){
+	socket.emit('message', { id: 'a', command: 'toggle' } );
+}, 100);
 
 
 

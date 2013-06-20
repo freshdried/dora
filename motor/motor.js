@@ -11,22 +11,18 @@ var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 sp.on("open", function(){
 	var Device = function(letter, info){
 		info = info || {};
+		this.id = letter;
 		this.type = 'Device';
 		this.name = info.name || "";
 		this.description = info.description || "";
 		this.location =  info.location || "";
 	};
-	//FIX PROTOTYPE STUFF
 	var Relay = function(letter, info){
-		//this.prototype = new Device(letter, info);
-		Relay.prototype = new Device(letter, info);
-
+		Device.call(this, letter, info);
 		var messages = [letter.toLowerCase(), letter.toUpperCase()];
 		var state = messages.indexOf(letter);
 		var write = function(newstate){
 			sp.write(messages[newstate]);
-			//console.log(newstate);
-			//Log to external file
 			state = newstate;
 		};
 		write(state); //initial state
@@ -44,12 +40,23 @@ sp.on("open", function(){
 		'b': new Relay('B'),
 		'c': new Relay('C'),
 	}
+	/*
 	setInterval(function(){
 		devices.a.toggle();
 	}, 1000);
+	*/
 	io.sockets.on('connection', function(socket){
 		socket.emit('welcome', "Hello World!");
 		socket.emit('welcome', devices);
+		socket.on('message', function(msg){
+			try{
+				devices [msg.id] [msg.command] ();
+			}catch(e){
+				console.log(e);
+			}
+
+
+		});
 	});
 
 	sp.on('data', function(data){
