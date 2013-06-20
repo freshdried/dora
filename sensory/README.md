@@ -12,12 +12,13 @@ Connects physical world to computer
 ###install and run
 > upload sensory.ino to arduino
 
-> npm install serialport
+> npm install
 
 > node sensory.js
 
+###Maybe later
+ - implement channels if I have more devices
+
 ###TODO
- - implement websocket
- - Think about additional senses
 
 

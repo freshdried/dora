@@ -1,8 +1,11 @@
 var PHILIPS_RC_5331 = {
+	'POWER' : 0x4C7,
+	'EJECT' : 0x442,
+	'NWEST' : 0x4D1,
+	'NEAST' : 0x482,
 	'LEFT' : 0x45A,
 	'RIGHT' : 0x45B,
 	'OK' : 0x45C,
-	'POWER' : 0x4C7,
 	'UP' : 0x458,
 	'DOWN' : 0x459,
 	'RETURN' : 0x483,

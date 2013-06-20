@@ -1,7 +1,7 @@
 #include "IRremote.h"
 
 /*
- * sensory.ino
+ * sensory
  *
  * Connects physical world to computer
  *
@@ -21,11 +21,13 @@ void setup()
 
 void loop()
 {
+	//Remote
 	if(irrecv.decode(&results))
 	{
 		long out = results.value;
 		if(out > 0 && out < 131072) //filter out noise
 		{
+			Serial.print('R');
 			Serial.println(out, HEX);
 		}
 		irrecv.resume();
