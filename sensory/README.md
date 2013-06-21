@@ -8,9 +8,11 @@ Connects physical world to computer
 ###dependencies
 - [node-serialport](https://github.com/voodootikigod/node-serialport)
 - [IRRemote](https://github.com/shirriff/Arduino-IRremote) in your Arduino libraries
+- [socket.io](http://socket.io/)
+
 
 ###install and run
-> upload sensory.ino to arduino
+> upload sketch.ino to arduino
 
 > npm install
 
@@ -20,5 +22,8 @@ Connects physical world to computer
  - implement channels if I have more devices
 
 ###TODO
+ - implement error handling
+ 	- disconnect, etc.
+ - implement logging
 
 

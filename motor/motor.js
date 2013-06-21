@@ -1,12 +1,12 @@
 var serialport = require("serialport");
 var io = require("socket.io").listen(8081);
 
+io.set('log level', 1);
+
 var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 	parser: serialport.parsers.readline("\n"),
 	baudrate: 9600
 });
-
-//TODO: Add some inheritance from a general device object
 
 sp.on("open", function(){
 	var Device = function(letter, info){
@@ -26,7 +26,6 @@ sp.on("open", function(){
 			state = newstate;
 		};
 		write(state); //initial state
-		console.log(messages);
 
 		this.type =  'Relay';
 		this.getstate =  function(){ return state };
@@ -40,14 +39,8 @@ sp.on("open", function(){
 		'b': new Relay('B'),
 		'c': new Relay('C'),
 	}
-	/*
-	setInterval(function(){
-		devices.a.toggle();
-	}, 1000);
-	*/
 	io.sockets.on('connection', function(socket){
-		socket.emit('welcome', "Hello World!");
-		socket.emit('welcome', devices);
+		socket.emit('info', devices);
 		socket.on('message', function(msg){
 			try{
 				devices [msg.id] [msg.command] ();
@@ -67,4 +60,5 @@ sp.on("open", function(){
 
 sp.on("close", function(){
 	console.log('close');
+	//implement error!
 });

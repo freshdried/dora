@@ -23,26 +23,26 @@ body{
 </pre>
 
 <script>
-var socket = io.connect('http://localhost:8080/remote');
+var socket = io.connect('http://localhost:8080/');
 
 var write = new function(){
 	var node = document.getElementById("log");
-	return function(data){
-		node.innerHTML += JSON.stringify(data, undefined, 2);
+	return function(str){
+		node.innerHTML += str;
 		node.innerHTML += '\n';
 		node.scrollTop = node.scrollHeight;
 	}
 }
 
 
-
-socket.on('welcome', function(data){
-	write(data);
+socket.on('info', function(data){
+	write(JSON.stringify(data, undefined, 4));
 });
 
 socket.on('message', function(data){
-	write(data);
+	write(JSON.stringify(data, undefined, 4));
 });
+
 
 </script>
 </body>

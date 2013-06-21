@@ -9,15 +9,21 @@ Connects computer to physical world
 
 ###dependencies
 - [node-serialport](https://github.com/voodootikigod/node-serialport)
+- [socket.io](http://socket.io/)
 
 ###install and run
-> upload motor.ino to arduino
+> upload sketch.ino to arduino
 
 > npm install
 
 > node motor.js
 
 ###TODO
- - On reset, make lights last configuration
- - Add pictures
- - Include wiring diagrams, give credit to glacialwanderer
+ - Improve documentation
+	 - Add pictures
+	 - Include wiring diagrams, give credit to glacialwanderer
+ - implement error handling
+ 	- disconnect, etc.
+ - implement logging
+ 	- On reset, make lights last configuration
+

@@ -1,6 +1,8 @@
 var serialport = require("serialport");
 var io = require("socket.io").listen(8080);
 
+io.set('log level', 1);
+
 var sp = new serialport.SerialPort("/dev/ttyACM0",{
 	parser: serialport.parsers.readline("\n"),
 	baudrate: 9600
@@ -17,83 +19,96 @@ var sp = new serialport.SerialPort("/dev/ttyACM0",{
  */
 
 sp.on("open", function(){
+	console.log("open");
+	var getdevice = {};
+
+	var Device = function(info){
+		this.id = info.id;
+		this.name = info.name || "";
+		this.type = info.type;
+		this.description = info.description || "";
+		this.location = info.location || "";
+
+		getdevice[info.code] = this;
+		publish = function(message){
+			io.sockets.emit("message", {
+				device: info.id,
+				message: message
+			});
+		};
+
+		this.parse = console.log;
+	}
+
 	var devices = {
-		'R': (function(){
-			var buttons = (function(){
+		'remote': new function(){
+			Device.call(this, {
+				id: 'remote',
+				name: 'My Remote',
+				type: 'Remote',
+				code: 'R',
+				description: 'This is Sean\'s Remote Control',
+				location: 'everywhere...'
+
+			});
+			var buttons = new function(){
 				var philips = require("./remotes/PHILIPS_RC_5331");
 				var buttons= {};
+				Button = function(name){
+					this.name = name;
+					this.state = 0;
+					this.releasetimeoutid = null;
+
+					var self = this;
+					this.getmessage = function(){
+						return {
+							name: self.name,
+							state: self.state
+						};
+					};
+				}
+
 				for (name in philips){
-					var button = {
-						name: name,
-						state: 0,
-						releasetimeoutid: null,
-					}
-					buttons[philips[name]] = button;
+					buttons[philips[name]] = new Button(name);
 				}
 				return buttons;
-			})();
+			};
 
-			var remote = io.of('/remote');
-			remote.on('connection', function(socket){
-				socket.emit('welcome', 'Connection Successful!');
-			});
-			function strip(button){
-				return {
-					name: button.name,
-					state: button.state
-				};
-			}
 
 			var last_raw; 
 			var raw; 
-			return {
-				id: 'remote',
-				type: 'remote',
-				namespace: remote.name,
-				parse: function(data){
-					raw = parseInt(data, 16);
-					var code = raw % 0x10000;
 
-					var button = buttons[code];
-					if(raw != last_raw){
-						button.state = 1;
-						remote.emit('message', strip(button));
-					}
-					last_raw = raw;
-					clearTimeout(button.releasetimeoutid);
-					button.releasetimeoutid = setTimeout(function(){
-						button.state = 0;
-						remote.emit('message', strip(button));
-					}, 110);
-				},
-				events: ['message']
-			}
+			this.parse = function(data){
+				raw = parseInt(data, 16);
+				var code = raw % 0x10000;
+
+				var button = buttons[code];
+				if(raw != last_raw){
+					button.state = 1;
+					publish(button.getmessage());
+				}
+				last_raw = raw;
+				clearTimeout(button.releasetimeoutid);
+				button.releasetimeoutid = setTimeout(function(){
+					button.state = 0;
+					publish( button.getmessage());
+				}, 120);
+			};
 
 
-		})()
-	}
-
-	var devicelist = {};
-	for( code in devices){
-		var device = devices[code];
-		devicelist[device.id] = {
-			type: device.type,
-			namespace: device.namespace,
-			events: device.events
 		}
 	}
 
 	io.sockets.on('connection', function(socket){
-		socket.emit('welcome', {
-			"text": "Connect to one of these devices",
-			"devicelist": devicelist
+		socket.emit('info', {
+			devices: devices
 		});
 		
 	});
 	sp.on('data', function(data){
 		var code = data[0];
-		if( code in devices){
-			devices[code].parse(data.substring(1));
+		if( code in getdevice){
+			getdevice[code].parse(data.substring(1));
 		}
 	});
 });
@@ -101,4 +116,5 @@ sp.on("open", function(){
 
 sp.on("close", function(){
 	console.log('close');
+	//implement error
 });
