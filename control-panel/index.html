@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>living-space control panel</title>
+<script src="../motor/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+<style type="text/css">
+body{
+	margin: 0;
+	padding: 0;
+
+	overflow: hidden;
+	font-family: monospace;
+	background: #ebebeb;
+}
+
+#terminal {
+	margin: 0;
+	padding: 0;
+
+	height: 100%;
+	width: 100%;
+
+	overflow: scroll;
+	overflow: hidden;
+	background: #252726;
+	color:#d8d8d8;
+}
+#terminal-output {
+	width: 100%;
+}
+#terminal-input {
+	background: transparent;
+	border: none;
+	padding: 0;
+	display: inline;
+
+	font-family: monospace;
+	color:#d8d8d8;
+}
+</style>
+</head>
+<body>
+
+<div id="terminal">
+	<pre id="terminal-output"></pre>
+	<span id="terminal-inputline">
+		$
+		<input type="text" id=terminal-input>
+	</span>
+</div>
+
+<script>
+var terminal = new function(){
+	var output = document.getElementById('terminal-output');
+	var terminal = output.parentNode;
+	this.print = function(str){
+		output.innerHTML += str;
+		terminal.scrollTop = terminal.scrollHeight;
+	};
+	this.println = function(str){
+		output.innerHTML += str;
+		output.innerHTML += '\n';
+		terminal.scrollTop = terminal.scrollHeight;
+	};
+	this.clear = function(){
+		output.innerHTML = "";
+	};
+
+};
+terminal.println("Welcome to the Room Control Shell!");
+terminal.println("Type help for help");
+var commands = {
+	help: function(args){
+		for( i in commands){
+			terminal.println(i);
+		};
+	},
+	clear: terminal.clear
+}
+var input = document.getElementById('terminal-input');
+input.onkeypress = function(e){
+	var keycode = e.keycode || e.which;
+	if (keycode == '13'){
+		var args = input.value.split();
+		if (args[0] in commands){
+			commands[args[0]](args.slice(1));
+		}else{
+			terminal.println("command not found: " + args[0]);
+		};
+	};
+};
+
+var motor = io.connect('http://localhost:8081');
+
+var sensory = io.connect('http://localhost:8080/');
+
+
+
+
+</script>
+</body>
+</html>

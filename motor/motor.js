@@ -9,6 +9,7 @@ var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 });
 
 sp.on("open", function(){
+	console.log("open");
 	var Device = function(letter, info){
 		info = info || {};
 		this.id = letter;
