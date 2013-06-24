@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>living-space control panel</title>
-<script src="../motor/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
+<script src="/sensory/sensory/socket.io/socket.io.js"></script>
 <style type="text/css">
 body{
 	margin: 0;
@@ -106,9 +106,31 @@ input.onkeypress = function(e){
 	};
 };
 
-var motor = io.connect('http://localhost:8081');
+/*
+var motor = new function(){
+	var socket = io.connect('/motor', { resource: 'motor/socket.io'});
+	var devices = {};
+	socket.on('info', function(data){
+		terminal.println('Connected to motor.js');
+		devices = data;
+	});
 
-var sensory = io.connect('http://localhost:8080/');
+	this.socket = socket;
+	this.devices = devices;
+}
+*/
+
+var sensory = new function(){
+        var socket = io.connect('/', { resource: 'sensory/socket.io'});
+	var devices = {};
+	socket.on('info', function(data){
+		terminal.println('Connected to sensory.js');
+		devices = data;
+	});
+
+	this.socket = socket;
+	this.devices = devices;
+}
 
 
 

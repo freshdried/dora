@@ -1,7 +1,5 @@
 var serialport = require("serialport");
-var io = require("socket.io").listen(8081);
-
-io.set('log level', 1);
+var io = require("socket.io").listen(9001);
 
 var sp = new serialport.SerialPort("/dev/ttyUSB0",{
 	parser: serialport.parsers.readline("\n"),

@@ -1,7 +1,6 @@
 var serialport = require("serialport");
-var io = require("socket.io").listen(8080);
-
-io.set('log level', 1);
+var io = require("socket.io").listen(9002);
+io.set('resource', '/sensory/socket.io');
 
 var sp = new serialport.SerialPort("/dev/ttyACM0",{
 	parser: serialport.parsers.readline("\n"),
