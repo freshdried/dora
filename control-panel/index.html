@@ -7,34 +7,48 @@ body{
 	margin: 0;
 	padding: 0;
 
-	overflow: hidden;
-	font-family: monospace;
 	background: #ebebeb;
+	overflow: hidden;
 }
 
 #terminal {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 
 	height: 100%;
 	width: 100%;
 
-	overflow: scroll;
+
 	overflow: hidden;
+	word-wrap: break-word;
 	background: #252726;
 	color:#d8d8d8;
+	font-family: monospace;
+	font-size: 20px;
 }
 #terminal-output {
+	padding: 0px;
+	margin: 0px;
 	width: 100%;
+}
+#terminal-inputline{
+	width: 100%;
+	display: inline;
+}
+.prompt {
+	color: #ffac18;
+	margin: 0px;
+	width: auto;
 }
 #terminal-input {
 	background: transparent;
 	border: none;
-	padding: 0;
-	display: inline;
-
+	outline: none;
+	width: 90%;
+	margin: 0px;
+	color: inherit;
 	font-family: monospace;
-	color:#d8d8d8;
+	font-size: 20px;
 }
 </style>
 </head>
@@ -43,23 +57,21 @@ body{
 <div id="terminal">
 	<pre id="terminal-output"></pre>
 	<span id="terminal-inputline">
-		$
-		<input type="text" id=terminal-input>
+		<span class="prompt">$ </span><input type="text" id=terminal-input autofocus>
 	</span>
 </div>
 
 <script>
 var terminal = new function(){
 	var output = document.getElementById('terminal-output');
-	var terminal = output.parentNode;
+	var inputline = document.getElementById('terminal-inputline');
 	this.print = function(str){
-		output.innerHTML += str;
-		terminal.scrollTop = terminal.scrollHeight;
+		output.insertAdjacentHTML('beforeEnd', str);
+		inputline.scrollIntoView();
 	};
 	this.println = function(str){
-		output.innerHTML += str;
-		output.innerHTML += '\n';
-		terminal.scrollTop = terminal.scrollHeight;
+		output.insertAdjacentHTML('beforeEnd', str + "\n");
+		inputline.scrollIntoView();
 	};
 	this.clear = function(){
 		output.innerHTML = "";
@@ -76,16 +88,21 @@ var commands = {
 	},
 	clear: terminal.clear
 }
+//TODO: fix wrap on overflow
 var input = document.getElementById('terminal-input');
 input.onkeypress = function(e){
 	var keycode = e.keycode || e.which;
 	if (keycode == '13'){
-		var args = input.value.split();
-		if (args[0] in commands){
+		var args = input.value.split(" ");
+		terminal.println('<span class="prompt">$ </span>' + input.value);
+
+		if (input.value.replace(/ /g, '') == ''){
+		}else if (args[0] in commands){
 			commands[args[0]](args.slice(1));
 		}else{
 			terminal.println("command not found: " + args[0]);
 		};
+		input.value = "";
 	};
 };
 
