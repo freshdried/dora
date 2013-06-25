@@ -13,6 +13,8 @@ Presents physical data/physical functions through a websocket API
 1. IR Signals
 	- IR signal from a remote (Phillips RC-5331)
 
+<hr>
+
 ###dependencies
 ####arduino
 - [IRRemote](https://github.com/shirriff/Arduino-IRremote) in your Arduino libraries
@@ -23,7 +25,7 @@ Presents physical data/physical functions through a websocket API
 
 ###To run:
 
-> #upload arduino code
+> \#upload arduino code
 
 > npm install
 
