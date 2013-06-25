@@ -12,3 +12,7 @@ Transforms a living space into "living" space (living as in "alive").
 	- An attempt to enable a room to act _for the user_
 	- In other words, an attempt to make my life _even_ easier
 	- Sensory, physical data is collected, processed, and acted upon _for the user_
+
+###Todo:
+ - abstract out core-client from reflex.js (so I can also use it in control-panel);
+ - make core-client load functionality dynamically from info data.
