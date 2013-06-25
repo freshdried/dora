@@ -1,6 +1,8 @@
 ##Core
 
-Here is the core nodejs application that interfaces with the physical world.
+Here is the core application that interfaces with the physical world.
+
+Presents physical data/physical functions through a websocket API
 
 ###Motor Controls
 1. Mains Relays (3)
