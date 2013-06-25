@@ -4,9 +4,14 @@ var motor =  new function(){
 		console.log('connected to motor!');
 	});
 
-	this.io.on('info', function(data){
-		console.log(data);
-	});
+	(function(self){
+		var devices = {};
+		self.io.on('info', function(data){
+			devices = data;
+			console.log(devices);
+			
+		});
+	})(this);
 }
 
 var sensory = require('socket.io-client').connect('http://localhost:9000/sensory');
