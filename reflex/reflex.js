@@ -25,7 +25,9 @@ devicehandle = {
 			},
 		}
 		return function(message){
-			buttonhandle[message.button](message.state);
+			if (typeof(buttonhandle[message.button]) == "function"){
+				buttonhandle[message.button](message.state);
+			};
 		}
 	},
 }
