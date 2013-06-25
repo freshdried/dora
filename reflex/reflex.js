@@ -39,7 +39,7 @@ var sensory = new function(){
 	this.io.on('connect', function(){
 		console.log('connected to sensory!');
 	});
-	sensory.on('message', function(data){
+	this.io.on('message', function(data){
 		console.log(data);
 		devicehandle[data.device](data.message);
 	});
