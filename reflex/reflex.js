@@ -5,29 +5,65 @@ var motor =  new function(){
 	});
 
 	(function(self){
-		var devices = {};
 		self.io.on('info', function(data){
-			devices = data;
-			console.log(devices);
-			
+			for (i in data){
+				var d = data[i];
+				var device = {};
+				device.name = d.name;
+				device.description = d.description;
+				device.type = d.type;
+				device.id = d.id;
+
+				for (c in d.commands){
+					(function(){
+						var command = d.commands[c];
+						var id = d.id;
+						device[d.commands[c]] = function(){
+							self.io.emit('message', {
+								id: id,
+								command: command
+							});
+						};
+					})();
+				}
+				console.log(device);
+
+				self[d.id] = device;
+			}
 		});
 	})(this);
 }
 
-var sensory = require('socket.io-client').connect('http://localhost:9000/sensory');
-sensory.on('connect', function(){
-	console.log('connected to sensory!');
-});
-sensory.on('message', function(data){
-	console.log(data);
-	devicehandle[data.device](data.message);
-});
+var sensory = new function(){
+	this.io = require('socket.io-client').connect('http://localhost:9000/sensory');
+	this.io.on('connect', function(){
+		console.log('connected to sensory!');
+	});
+	sensory.on('message', function(data){
+		console.log(data);
+		devicehandle[data.device](data.message);
+	});
+}
 devicehandle = {
 	'remote': new function(){
-		var buttonhandle = {
-			OK: function(state){
-				if (state) toggle();
-			},
+		var buttonhandle = new function(){
+			function onPress(fn){
+				return function(state){
+					if (state){
+						fn();
+					};
+				}
+			}
+			return {
+				OK: onPress(function(){
+					motor.a.toggle();
+					motor.b.toggle();
+					motor.c.toggle();
+				}),
+				ONE: onPress(function(){ motor.a.toggle(); }),
+				TWO: onPress(function(){ motor.b.toggle(); }),
+				THREE: onPress(function(){ motor.c.toggle(); })
+			};
 		}
 		return function(message){
 			if (typeof(buttonhandle[message.button]) == "function"){
@@ -36,10 +72,3 @@ devicehandle = {
 		}
 	},
 }
-
-function toggle(){
-	motor.io.emit('message', {
-		id: 'a',
-		command: 'toggle'
-	});
-};
