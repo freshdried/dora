@@ -19,5 +19,7 @@ Transforms a living space into "living" space (living as in "alive").
 	 	- device types in motor and sensory...
 	 - Better error handling
 	 - Use logger like Winston
+	 - abstract out terminal functions ( so I can either use web or linux terminal)
  - core-client
-	 - abstract out core-client from reflex.js (so I can also use it in control-panel);
+ 	- make core-client browser aswell as nodejs
+	- give Core-client some initialization parameters
