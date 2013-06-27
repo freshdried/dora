@@ -1,16 +1,11 @@
-var serialport = require("serialport");
-
-module.exports = function(io){
-	var sp = new serialport.SerialPort("/dev/ttyUSB0",{
-		parser: serialport.parsers.readline("\n"),
-		baudrate: 9600
-	});
+module.exports = function(config){
+	var io = config.io;
+	var sp = config.sp;
 
 	sp.on("open", function(){
 		console.log("open");
 		var Device = function(letter, info){
 			info = info || {};
-			this.id = this.id || letter;
 			this.name = this.name || info.name || "";
 			this.description = this.description || info.description || "";
 			this.commands = (function(scope){
@@ -22,7 +17,6 @@ module.exports = function(io){
 				}
 				return commands;
 			})(this);
-
 		};
 		var Relay = function(letter, initialState, info){
 			var messages = [letter.toLowerCase(), letter.toUpperCase()];

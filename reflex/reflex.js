@@ -1,74 +1,134 @@
-var motor =  new function(){
-	this.io = require('socket.io-client').connect('http://localhost:9000/motor');
-	this.io.on('connect', function(){
-		console.log('connected to motor!');
-	});
+var io = require('socket.io-client');
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
 
-	(function(self){
-		self.io.on('info', function(data){
-			for (i in data){
-				var d = data[i];
-				var device = {};
-				device.name = d.name;
-				device.description = d.description;
-				device.type = d.type;
-				device.id = d.id;
 
-				for (c in d.commands){
-					(function(){
-						var command = d.commands[c];
-						var id = d.id;
-						device[d.commands[c]] = function(){
-							self.io.emit('message', {
-								id: id,
-								command: command
-							});
-						};
-					})();
-				}
-				console.log(device);
+var core = new function(){
+	var Core = function(){
+		EventEmitter.call(this);
+		var core = this;
 
-				self[d.id] = device;
+		var ready = {
+			motor: false,
+			sensory: false
+		}
+		this.on('motor-ready', function(){
+			ready.motor = true;
+			if (ready.sensory){
+				core.emit('ready');
 			}
 		});
-	})(this);
+
+		this.on('sensory-ready', function(){
+			ready.sensory = true;
+			if (ready.motor){
+				core.emit('ready');
+			}
+		});
+
+
+
+		this.motor =  new function(){
+			this.io = io.connect('http://localhost:9000/motor');
+			this.io.on('connect', function(){
+				console.log('connected to motor!');
+			});
+			this.devices = {};
+
+			(function(self){
+				self.io.on('info', function(data){
+					for (id in data){
+						var d = data[id];
+						var device = {};
+						device.name = d.name;
+						device.description = d.description;
+						device.type = d.type;
+						device.commands = {};
+
+						for (c in d.commands){
+							var command = d.commands[c];
+							device.commands[command] = function(){
+								self.io.emit('message', {
+									id: id,
+									command: command
+								});
+							};
+						}
+						self.devices[id] = device;
+					};
+					console.log('motor devices initialized');
+					console.log(self);
+					core.emit('motor-ready');
+				});
+			})(this);
+		}
+
+		this.sensory = new function(){
+			this.io = io.connect('http://localhost:9000/sensory');
+			this.io.on('connect', function(){
+				console.log('connected to sensory!');
+			});
+
+			this.devices = {};
+
+			(function(self){
+				self.io.on('info', function(data){
+					for (id in data){
+						var d = data[id];
+						var device = {};
+
+						device.name = d.name;
+						device.description = d.description;
+						device.type = d.type;
+						device.commands = {};
+						//TODO:finish this, add type-based initialization here
+
+					}
+
+					console.log('sensory devices initialized');
+					core.emit('sensory-ready');
+				});
+
+				self.io.on('message', function(data){
+					console.log(data);
+					self.devices[data.device].handle(data.message);
+				});
+			})(this);
+		}
+	};
+	util.inherits(Core, EventEmitter);
+
+	return new Core();
 }
 
-var sensory = new function(){
-	this.io = require('socket.io-client').connect('http://localhost:9000/sensory');
-	this.io.on('connect', function(){
-		console.log('connected to sensory!');
-	});
-	sensory.on('message', function(data){
-		console.log(data);
-		devicehandle[data.device](data.message);
-	});
-}
-devicehandle = {
-	'remote': new function(){
-		var buttonhandle = new function(){
-			function onPress(fn){
-				return function(state){
-					if (state){
-						fn();
-					};
-				}
+
+core.on('ready', function(){
+	core.sensory.devices['remote'] = new function(){
+		this.onPress = function(cb){
+			return function(state){
+				if (state){
+					cb();
+				};
 			}
-			return {
-				OK: onPress(function(){
-					motor.a.toggle();
-					motor.b.toggle();
-					motor.c.toggle();
-				}),
-				ONE: onPress(function(){ motor.a.toggle(); }),
-				TWO: onPress(function(){ motor.b.toggle(); }),
-				THREE: onPress(function(){ motor.c.toggle(); })
-			};
 		}
-		return function(message){
-			if (typeof(buttonhandle[message.button]) == "function"){
-				buttonhandle[message.button](message.state);
-			};
-		}
-	},
-}
+		this.buttonhandle = {};
+		(function(self){
+			self.handle = function(message){
+				if (typeof(self.buttonhandle[message.button]) == "function"){
+					self.buttonhandle[message.button](message.state);
+				};
+			}
+		})(this);
+	}
+	var remote = core.sensory.devices.remote;
+
+	//TODO: implement promises...
+	remote.buttonhandle['OK'] = remote.onPress(function(){
+		core.motor.devices.a.commands.toggle();
+		core.motor.devices.b.commands.toggle();
+		core.motor.devices.c.commands.toggle();
+	});
+	remote.buttonhandle['ONE'] = remote.onPress( core.motor.devices.a.commands.toggle);
+	remote.buttonhandle['TWO'] = remote.onPress( core.motor.devices.b.commands.toggle);
+	remote.buttonhandle['THREE'] = remote.onPress( core.motor.devices.c.commands.toggle);
+});

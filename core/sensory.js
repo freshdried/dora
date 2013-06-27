@@ -1,10 +1,6 @@
-var serialport = require("serialport");
-
-module.exports = function(io){
-	var sp = new serialport.SerialPort("/dev/ttyACM0",{
-		parser: serialport.parsers.readline("\n"),
-		baudrate: 9600
-	});
+module.exports = function(config){
+	var io = config.io;
+	var sp = config.sp;
 
 	/*
 	 * PHILIPS_RC-5331 IR remote functionality:
@@ -21,16 +17,15 @@ module.exports = function(io){
 		var getdevice = {};
 
 		var Device = function(info){
-			this.id = info.id;
+			var id = info.id;
 			this.name = info.name || "";
 			this.type = info.type;
 			this.description = info.description || "";
-			this.location = info.location || "";
 
 			getdevice[info.code] = this;
 			publish = function(message){
 				io.emit("message", {
-					device: info.id,
+					device: id,
 					message: message
 				});
 			};
