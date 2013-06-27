@@ -42,9 +42,11 @@ module.exports = function(config){
 			'c': new Relay('c', 1),
 		}
 		io.on('connection', function(socket){
-			socket.emit('info', devices);
+			socket.emit('info', {
+				devices: devices
+			});
 			var messagehandle = function(msg){
-				console.log(msg);
+				//console.log(msg);
 				try{
 					devices [msg.id] [msg.command] ();
 				}catch(e){

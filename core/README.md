@@ -30,8 +30,3 @@ Presents physical data/physical functions through a websocket API
 > npm install
 
 > node index.js
-
-<hr>
-###todo
- - fix terminal
- - components?

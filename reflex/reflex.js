@@ -13,6 +13,7 @@ var core = new function(){
 			sensory: false
 		}
 		this.on('motor-ready', function(){
+			console.log('motor devices initialized');
 			ready.motor = true;
 			if (ready.sensory){
 				core.emit('ready');
@@ -20,6 +21,7 @@ var core = new function(){
 		});
 
 		this.on('sensory-ready', function(){
+			console.log('sensory devices initialized');
 			ready.sensory = true;
 			if (ready.motor){
 				core.emit('ready');
@@ -37,8 +39,8 @@ var core = new function(){
 
 			(function(self){
 				self.io.on('info', function(data){
-					for (id in data){
-						var d = data[id];
+					for (id in data.devices){
+						var d = data.devices[id];
 						var device = {};
 						device.name = d.name;
 						device.description = d.description;
@@ -46,18 +48,20 @@ var core = new function(){
 						device.commands = {};
 
 						for (c in d.commands){
-							var command = d.commands[c];
-							device.commands[command] = function(){
-								self.io.emit('message', {
+							new function(){
+								var command = d.commands[c];
+								var message = {
 									id: id,
 									command: command
-								});
-							};
+								}
+								device.commands[command] = function(){
+									console.log(message);
+									self.io.emit('message', message);
+								};
+							}
 						}
 						self.devices[id] = device;
 					};
-					console.log('motor devices initialized');
-					console.log(self);
 					core.emit('motor-ready');
 				});
 			})(this);
@@ -71,21 +75,41 @@ var core = new function(){
 
 			this.devices = {};
 
+			var Device = { //holds device classes
+				Remote: function(){
+					this.onPress = function(cb){
+						return function(state){
+							if (state){
+								cb();
+							};
+						}
+					}
+					this.buttonhandle = {};
+					(function(self){
+						self.handle = function(message){
+							if (typeof(self.buttonhandle[message.button]) == "function"){
+								self.buttonhandle[message.button](message.state);
+							};
+						}
+					})(this);
+				}
+			};
+
 			(function(self){
 				self.io.on('info', function(data){
-					for (id in data){
-						var d = data[id];
+					for (id in data.devices){
+						var d = data.devices[id];
 						var device = {};
 
 						device.name = d.name;
 						device.description = d.description;
 						device.type = d.type;
-						device.commands = {};
-						//TODO:finish this, add type-based initialization here
-
+						if (device.type in Device) {
+							Device[device.type].call(device);
+						}
+						self.devices[id] = device;
 					}
 
-					console.log('sensory devices initialized');
 					core.emit('sensory-ready');
 				});
 
@@ -103,23 +127,6 @@ var core = new function(){
 
 
 core.on('ready', function(){
-	core.sensory.devices['remote'] = new function(){
-		this.onPress = function(cb){
-			return function(state){
-				if (state){
-					cb();
-				};
-			}
-		}
-		this.buttonhandle = {};
-		(function(self){
-			self.handle = function(message){
-				if (typeof(self.buttonhandle[message.button]) == "function"){
-					self.buttonhandle[message.button](message.state);
-				};
-			}
-		})(this);
-	}
 	var remote = core.sensory.devices.remote;
 
 	//TODO: implement promises...

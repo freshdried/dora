@@ -8,8 +8,9 @@ var io = require('socket.io').listen(server);
 
 var events = require('events');
 
-var mode = process.env.MODE || "testing"
-if (mode == "production"){
+var testing = (process.env.MODE != "production");
+if (!testing){
+	io.logger.level = 1;
 	var serialport = require("serialport");
 	require('./motor')({
 		io: io.of('/motor'),

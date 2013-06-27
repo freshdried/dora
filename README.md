@@ -14,6 +14,10 @@ Transforms a living space into "living" space (living as in "alive").
 	- Sensory, physical data is collected, processed, and acted upon _for the user_
 
 ###Todo:
- - abstract out core-client from reflex.js (so I can also use it in control-panel);
- - make core-client load functionality dynamically from info data.
- - Make virtual serialports
+ - core
+	 - initialize devices in index.js
+	 	- device types in motor and sensory...
+	 - Better error handling
+	 - Use logger like Winston
+ - core-client
+	 - abstract out core-client from reflex.js (so I can also use it in control-panel);
