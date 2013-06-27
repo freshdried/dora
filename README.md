@@ -16,3 +16,4 @@ Transforms a living space into "living" space (living as in "alive").
 ###Todo:
  - abstract out core-client from reflex.js (so I can also use it in control-panel);
  - make core-client load functionality dynamically from info data.
+ - Make virtual serialports
