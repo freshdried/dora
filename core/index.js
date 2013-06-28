@@ -1,3 +1,8 @@
+var Sensory = require('./sensory')
+
+var serialport = require("serialport");
+var virtualserialport = require("./virtualserialport.js");
+
 var express = require('express');
 var app  = express();
 
@@ -9,37 +14,51 @@ var io = require('socket.io').listen(server);
 
 var events = require('events');
 
-var testing = (process.env.MODE != "production");
-if (!testing){
-	io.logger.level = 1;
-	var serialport = require("serialport");
-	require('./motor')({
-		io: io.of('/motor'),
-		sp: new serialport.SerialPort("/dev/ttyUSB0",{
-			parser: serialport.parsers.readline("\n"),
-			baudrate: 9600
-		})
-	});
 
-	require('./sensory')({
-		io: io.of('/sensory'),
-		sp: new serialport.SerialPort("/dev/ttyACM0",{
-			parser: serialport.parsers.readline("\n"),
-			baudrate: 9600
-		})
-	});
-}
-else {
-	var virtualserialport = require("./virtualserialport.js");
-	require('./motor')({
-		io: io.of('/motor'),
-		sp: new virtualserialport.motor()
-	});
-	require('./sensory')({
-		io: io.of('/sensory'),
-		sp: new virtualserialport.sensory()
-	});
-}
+var testing = (process.env.MODE != "production");
+
+require('./motor')({
+	io: io.of('/motor'),
+	sp: (function(){
+		if(testing) return new virtualserialport.motor();
+		else return new serialport.serialport("/dev/ttyUSB0",{
+				parser: serialport.parsers.readline("\n"),
+				baudrate: 9600
+		});
+	})(),
+	devices: {
+		'a': {
+			code: 'A',
+			type: 'Relay',
+		},
+		'b': {
+			code: 'B',
+			type: 'Relay',
+		},
+		'c': {
+			code: 'C',
+			type: 'Relay',
+		},
+	},
+});
+require('./sensory')({
+	io: io.of('/sensory'),
+	sp: (function(){
+		if(testing) return new virtualserialport.sensory();
+		else return new serialport.serialport("/dev/ttyACM0",{
+				parser: serialport.parsers.readline("\n"),
+				baudrate: 9600
+		});
+	})(),
+	devices: {
+		'remote': {
+			code: 'R',
+			type: 'Remote',
+			name: 'My Remote',
+			description: 'This is Sean\'s Remote Control',
+		},
+	},
+});
 
 server.listen(9000);
-console.log('Server started at port 9000');
+console.log('Core started at port 9000');

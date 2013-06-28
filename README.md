@@ -1,4 +1,5 @@
 #DORA
+
 _DO_rm _R_oom _A_utomation
 
 Transforms a living space into "living" space (living as in "alive").
@@ -30,4 +31,4 @@ Javascript Domotics.
  - __control-shell__
  	- make terminal a require? (that supports multiple input/output transports)
  - Document arduino code/circuitry
- - Move to Streams
+ - Move to Streams?

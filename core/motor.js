@@ -1,46 +1,62 @@
-module.exports = function(config){
-	var io = config.io;
-	var sp = config.sp;
+var io = {};
+var sp = {};
+
+var Device = new function(){
+	var Device = function(info){
+		this.code = info.code;
+		this.name = info.name || "";
+		this.description = info.description || "";
+	};
+	var PopulateCommands = function(){
+		this.commands = (function(Device){
+			var commands = [];
+			for(attr in Device){
+				if (typeof(Device[attr]) == "function"){
+					commands.push(attr);
+				};
+			}
+			return commands;
+		})(this);
+	}
+
+
+	this.Relay = function(info){
+		Device.call(this, info);
+		this.type =  'Relay';
+
+		var messages = [this.code.toLowerCase(), this.code.toUpperCase()];
+		var state = info.initialstate || 1;
+		var write = function(newstate){
+			sp.write(messages[newstate]);
+			state = newstate;
+		};
+
+
+		this.getstate =  function(){ return state };
+		this.toggle =  function(){ write(state^1) };
+		this.on = function(){ write(1) };
+		this.off = function(){ write(0) };
+
+		PopulateCommands.call(this);
+	};
+}
+
+var Motor = function(settings){
+	console.log('Motor initialized');
+
+	io = settings.io;
+	sp = settings.sp;
+
+	var devices = {};
+
+	for (id in settings.devices){
+		var params = settings.devices[id];
+		devices[id] = new Device[params.type](params);
+	}
+
 
 	sp.on("open", function(){
-		console.log("open");
-		var Device = function(letter, info){
-			info = info || {};
-			this.name = this.name || info.name || "";
-			this.description = this.description || info.description || "";
-			this.commands = (function(scope){
-				var commands = [];
-				for(attr in scope){
-					if (typeof(scope[attr]) == "function"){
-						commands.push(attr);
-					};
-				}
-				return commands;
-			})(this);
-		};
-		var Relay = function(letter, initialState, info){
-			var messages = [letter.toLowerCase(), letter.toUpperCase()];
-			var state = initialState;
-			var write = function(newstate){
-				sp.write(messages[newstate]);
-				state = newstate;
-			};
-			write(state); //initial state
-
-			this.type =  'Relay';
-
-			this.getstate =  function(){ return state };
-			this.toggle =  function(){ write(state^1) };
-			this.on = function(){ write(1) };
-			this.off = function(){ write(0) };
-
-			Device.call(this, letter, info);
-		};
-		var devices = {
-			'a': new Relay('a', 1),
-			'b': new Relay('b', 1),
-			'c': new Relay('c', 1),
-		}
+		console.log("Motor: serialport open");
 		io.on('connection', function(socket){
 			socket.emit('info', {
 				devices: devices
@@ -68,4 +84,6 @@ module.exports = function(config){
 		console.log('close');
 		//implement error!
 	});
+
 }
+module.exports = Motor;

@@ -4,6 +4,7 @@ var core = new Core;
 
 core.on('ready', function(){
 	var remote = core.sensory.devices.remote;
+	console.log(core);
 
 	remote.buttonhandle['OK'] = remote.onPress(function(){
 		core.motor.devices.a.commands.toggle();
