@@ -1,7 +1,6 @@
 <html>
 <head>
 <title>living-space control panel</title>
-<script src="/socket.io/socket.io.js"></script>
 <style type="text/css">
 body{
 	margin: 0;
@@ -53,7 +52,7 @@ body{
 </style>
 </head>
 <body>
-
+<script src="/core-client/core-client.js"></script>
 <div id="terminal">
 	<pre id="terminal-output"></pre>
 	<span id="terminal-inputline">
@@ -62,6 +61,9 @@ body{
 </div>
 
 <script>
+var Core = require('core-client');
+var core = new Core();
+
 var terminal = new function(){
 	var output = document.getElementById('terminal-output');
 	var inputline = document.getElementById('terminal-inputline');
@@ -86,9 +88,12 @@ var commands = {
 			terminal.println(i);
 		};
 	},
-	clear: terminal.clear
+	clear: terminal.clear,
+	toggle: function(args){
+		core.motor.devices.a.commands.toggle();
+	},
+
 }
-//TODO: fix wrap on overflow
 var input = document.getElementById('terminal-input');
 input.onkeypress = function(e){
 	var keycode = e.keycode || e.which;
@@ -105,32 +110,6 @@ input.onkeypress = function(e){
 		input.value = "";
 	};
 };
-
-var motor = new function(){
-	var socket = io.connect('/motor');
-	var devices = {};
-	socket.on('info', function(data){
-		terminal.println('Connected to motor.js');
-		devices = data;
-	});
-
-	this.socket = socket;
-	this.devices = devices;
-}
-
-var sensory = new function(){
-        var socket = io.connect('/sensory');
-	var devices = {};
-	socket.on('info', function(data){
-		terminal.println('Connected to sensory.js');
-		devices = data;
-	});
-
-	this.socket = socket;
-	this.devices = devices;
-}
-
-
 
 
 </script>

@@ -1,7 +1,8 @@
 var express = require('express');
 var app  = express();
 
-app.use('/', express.static('./shell'));
+app.use('/', express.static('../shell' + '/public'));
+app.use('/core-client', express.static('../core-client' + '/public'));
 
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);

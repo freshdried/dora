@@ -16,17 +16,19 @@ Presents physical data/physical functions through a websocket API
 <hr>
 
 ###dependencies
-####arduino
+__arduino__
 - [IRRemote](https://github.com/shirriff/Arduino-IRremote) in your Arduino libraries
 
-####node.js
+__nodejs__
 - [node-serialport](https://github.com/voodootikigod/node-serialport)
 - [socket.io](http://socket.io/)
 
-###To run:
+###install
 
-> \#upload arduino code
+> \#upload arduino programs
 
 > npm install
+
+###run
 
 > node index.js

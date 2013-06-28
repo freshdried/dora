@@ -1,0 +1,8 @@
+{
+	"name": "reflex",
+	"private": true,
+	"dependencies": {
+		"core-client": "*"
+	}
+}
+		

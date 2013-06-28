@@ -1,5 +1,9 @@
-#living-space
+#DORA
+_DO_rm _R_oom _A_utomation
+
 Transforms a living space into "living" space (living as in "alive").
+Javascript Domotics.
+
 
 
 ###Goals
@@ -14,12 +18,16 @@ Transforms a living space into "living" space (living as in "alive").
 	- Sensory, physical data is collected, processed, and acted upon _for the user_
 
 ###Todo:
- - core
+ - __core__
 	 - initialize devices in index.js
 	 	- device types in motor and sensory...
 	 - Better error handling
 	 - Use logger like Winston
 	 - abstract out terminal functions ( so I can either use web or linux terminal)
- - core-client
+ - __core-client__
  	- make core-client browser aswell as nodejs
 	- give Core-client some initialization parameters
+ - __control-shell__
+ 	- make terminal a require? (that supports multiple input/output transports)
+ - Document arduino code/circuitry
+ - Move to Streams

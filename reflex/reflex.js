@@ -1,4 +1,4 @@
-var Core = require('./core-client');
+var Core = require('core-client');
 
 var core = new Core;
 
