@@ -21,7 +21,7 @@ require('./motor')({
 	io: io.of('/motor'),
 	sp: (function(){
 		if (testing){ return new virtualserialport.motor(); };
-		return new serialport.serialport("/dev/ttyUSB0",{
+		return new serialport.SerialPort("/dev/ttyUSB0",{
 				parser: serialport.parsers.readline("\n"),
 				baudrate: 9600
 		});
@@ -44,8 +44,8 @@ require('./motor')({
 require('./sensory')({
 	io: io.of('/sensory'),
 	sp: (function(){
-		if(testing) return new virtualserialport.sensory();
-		else return new serialport.serialport("/dev/ttyACM0",{
+		if (testing) { return new virtualserialport.sensory(); };
+		return new serialport.SerialPort("/dev/ttyACM0",{
 				parser: serialport.parsers.readline("\n"),
 				baudrate: 9600
 		});
