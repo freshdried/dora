@@ -20,8 +20,8 @@ var testing = (process.env.MODE != "production");
 require('./motor')({
 	io: io.of('/motor'),
 	sp: (function(){
-		if(testing) return new virtualserialport.motor();
-		else return new serialport.serialport("/dev/ttyUSB0",{
+		if (testing){ return new virtualserialport.motor(); };
+		return new serialport.serialport("/dev/ttyUSB0",{
 				parser: serialport.parsers.readline("\n"),
 				baudrate: 9600
 		});
