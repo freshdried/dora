@@ -1,4 +1,7 @@
 #!/bin/bash
+npm install
+sudo npm link
+
 OLDDIR=$(pwd)
 echo $PWD
 DIR=$(mktemp -d)
