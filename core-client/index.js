@@ -3,6 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 
 var Motor = function(settings){
 	var motor = this;
+	var core = settings.core;
 
 	this.io = settings.io;
 	this.io.on('connect', function(){
@@ -40,6 +41,7 @@ var Motor = function(settings){
 
 var Sensory = function(settings){
 	var sensory = this;
+	var core = settings.core;
 
 	this.io = settings.io;
 	this.io.on('connect', function(){
@@ -95,10 +97,12 @@ var Core = function(){
 
 	this.motor = new Motor({
 		io: io.connect('http://localhost:9000/motor'),
+		core: core,
 	});
 
 	this.sensory = new Sensory({
 		io: io.connect('http://localhost:9000/sensory'),
+		core: core,
 	});
 
 	var ready = {

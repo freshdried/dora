@@ -23,7 +23,6 @@ Javascript Domotics.
 	 - initialize devices in index.js
 	 	- device types in motor and sensory...
 	 - Better error handling
-	 - Use logger like Winston
 	 - abstract out terminal functions ( so I can either use web or linux terminal)
  - __core-client__
  	- make core-client browser aswell as nodejs
