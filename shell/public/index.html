@@ -78,6 +78,8 @@ var terminal = new function(){
 	this.clear = function(){
 		output.innerHTML = "";
 	};
+	this.history = [];
+	this.historypos = 0;
 
 };
 terminal.println("Welcome to the Room Control Shell!");
@@ -90,26 +92,70 @@ var commands = {
 	},
 	clear: terminal.clear,
 	toggle: function(args){
-		core.motor.devices.a.commands.toggle();
+		if (args.length == 0){
+			core.motor.devices.a.commands.toggle();
+			core.motor.devices.b.commands.toggle();
+			core.motor.devices.c.commands.toggle();
+		}
+		else if (args[0] == "--help"){
+			var str = "<i>Usage</i>: toggle [a|b|c]";
+			str += "\nno args toggles all";
+			str += "\nno specify a light to toggle a light";
+		}
+		else {
+			if (core.motor.devices[args[0]]){
+				core.motor.devices[args[0]].commands.toggle();
+			}
+		}
 	},
 
 }
 var input = document.getElementById('terminal-input');
-input.onkeypress = function(e){
+input.onkeydown = function(e) {
+	var keycode = e.keycode || e.which;
+	if (keycode == '38'){
+		e.preventDefault();
+		if (terminal.historypos < terminal.history.length){
+			terminal.historypos += 1;
+		}
+		var index = terminal.history.length - terminal.historypos;
+		input.value = terminal.history[index];
+	}
+	if (keycode == '40'){
+		e.preventDefault();
+		if (terminal.historypos > 1){
+			terminal.historypos -= 1;
+		}
+		var index = terminal.history.length - terminal.historypos;
+		input.value = terminal.history[index];
+	}
+}
+input.onkeypress = function(e) {
 	var keycode = e.keycode || e.which;
 	if (keycode == '13'){
 		var args = input.value.split(" ");
 		terminal.println('<span class="prompt">$ </span>' + input.value);
 
 		if (input.value.replace(/ /g, '') == ''){
-		}else if (args[0] in commands){
-			commands[args[0]](args.slice(1));
 		}else{
-			terminal.println("command not found: " + args[0]);
-		};
+			terminal.history.push(input.value);
+			terminal.historypos = 0;
+			if (args[0] in commands){
+				commands[args[0]](args.slice(1));
+			}else{
+				//terminal.println("command not found: " + args[0]);
+				eval(input.value);
+			};
+		}
 		input.value = "";
 	};
 };
+/*
+oldlog = console.log;
+console.log = function(x) {
+	terminal.println(JSON.stringify(x, undefined, 4));
+}
+*/
 
 
 </script>

@@ -1,5 +1,6 @@
 var io = require('socket.io-client');
 var EventEmitter = require('events').EventEmitter;
+//todo: debug mode?
 
 var Motor = function(settings){
 	var motor = this;
@@ -28,7 +29,7 @@ var Motor = function(settings){
 						command: command
 					}
 					device.commands[command] = function(){
-						console.log(message);
+						//console.log(message);
 						motor.io.emit('message', message);
 					};
 				}
@@ -87,7 +88,7 @@ var Sensory = function(settings){
 	});
 
 	this.io.on('message', function(data){
-		console.log(data);
+		//console.log(data);
 		sensory.devices[data.device].handle(data.message);
 	});
 }
