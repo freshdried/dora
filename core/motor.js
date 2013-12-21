@@ -32,7 +32,7 @@ var Device = new function(){
 		};
 
 
-		this.getstate =  function(){ return state };
+		this.getstate =  function(socket){ socket.emit(state)}; //fix
 		this.toggle =  function(){ write(state^1) };
 		this.on = function(){ write(1) };
 		this.off = function(){ write(0) };
@@ -64,7 +64,7 @@ var Motor = function(settings){
 			var messagehandle = function(msg){
 				//console.log(msg);
 				try{
-					devices [msg.id] [msg.command] ();
+					devices [msg.id] [msg.command] (socket);
 				}catch(e){
 					console.log(e);
 				}
