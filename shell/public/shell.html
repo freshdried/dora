@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>dora shell</title>
+<style type="text/css">
+body{
+	margin: 5%;
+	padding: 0;
+
+	overflow: hidden;
+}
+
+#terminal {
+	margin: 0px;
+	padding: 0px;
+
+	height: 100%;
+	width: 100%;
+
+
+	overflow: hidden;
+	word-wrap: break-word;
+	background: #252726;
+	color:#d8d8d8;
+	font-family: monospace;
+	font-size: small;
+}
+#terminal-output {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+}
+#terminal-inputline{
+	width: 100%;
+	display: inline;
+}
+.prompt {
+	color: #ffac18;
+	margin: 0px;
+	width: auto;
+}
+#terminal-input {
+	background: transparent;
+	border: none;
+	outline: none;
+	width: 90%;
+	margin: 0px;
+	color: inherit;
+	font-family: monospace;
+	font-size: small;
+}
+</style>
+</head>
+<body>
+<script src="/core-client/core-client.js"></script>
+<div id="terminal">
+	<pre id="terminal-output"></pre>
+	<span id="terminal-inputline">
+		<span class="prompt">$ </span><input type="text" id=terminal-input autofocus>
+	</span>
+</div>
+<script src="./terminal.js"></script>
+</body>
+</html>
