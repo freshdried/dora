@@ -12,6 +12,7 @@ Javascript Domotics.
 - act for me: _Intelligence_
 
 ###Todo:
+ - Fix emitting of getstate
  - __core__
 	 - initialize devices in index.js
 	 	- device types in motor and sensory...
