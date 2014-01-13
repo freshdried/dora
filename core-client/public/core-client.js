@@ -239,8 +239,8 @@ EventEmitter.prototype.listeners = function(type) {
 
 })(require("__browserify_process"))
 },{"__browserify_process":1}],"core-client":[function(require,module,exports){
-module.exports=require('L3BfqO');
-},{}],"L3BfqO":[function(require,module,exports){
+module.exports=require('+RjaWy');
+},{}],"+RjaWy":[function(require,module,exports){
 var io = require('socket.io-client');
 var EventEmitter = require('events').EventEmitter;
 //todo: debug mode?
@@ -340,12 +340,12 @@ var Core = function(){
 	var core = this;
 
 	this.motor = new Motor({
-		io: io.connect('http://localhost:9000/motor'),
+		io: io.connect('/motor'),
 		core: core,
 	});
 
 	this.sensory = new Sensory({
-		io: io.connect('http://localhost:9000/sensory'),
+		io: io.connect('/sensory'),
 		core: core,
 	});
 

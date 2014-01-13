@@ -97,12 +97,12 @@ var Core = function(){
 	var core = this;
 
 	this.motor = new Motor({
-		io: io.connect('http://localhost:9000/motor'),
+		io: io.connect('/motor'),
 		core: core,
 	});
 
 	this.sensory = new Sensory({
-		io: io.connect('http://localhost:9000/sensory'),
+		io: io.connect('/sensory'),
 		core: core,
 	});
 
