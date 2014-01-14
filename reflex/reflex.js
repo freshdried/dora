@@ -1,6 +1,7 @@
 var Core = require('core-client');
 
 var core = new Core;
+console.log(core);
 
 
 core.on('ready', function(){
@@ -16,3 +17,4 @@ core.on('ready', function(){
     remote.buttonhandle['TWO'] = remote.onPress( core.motor.devices.b.commands.toggle);
     remote.buttonhandle['THREE'] = remote.onPress( core.motor.devices.c.commands.toggle);
 });
+console.log("what?");
