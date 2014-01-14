@@ -11,4 +11,5 @@ Javascript Domotics.
   - add screenshots, pictures, circuit diagrams
  - make systemd script for it, gist it
  - publish DORA.sh
+ - fix reflex
 
