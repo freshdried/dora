@@ -93,16 +93,18 @@ var Sensory = function(settings){
 	});
 }
 
-var Core = function(){
+var Core = function(urlbase){
+	urlbase = typeof urlbase !== 'undefined' ? urlbase: '';
+	console.log(urlbase);
 	var core = this;
 
 	this.motor = new Motor({
-		io: io.connect('/motor'),
+		io: io.connect(urlbase + '/motor'),
 		core: core,
 	});
 
 	this.sensory = new Sensory({
-		io: io.connect('/sensory'),
+		io: io.connect(urlbase + '/sensory'),
 		core: core,
 	});
 

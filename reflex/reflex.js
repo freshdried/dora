@@ -1,6 +1,6 @@
 var Core = require('core-client');
 
-var core = new Core;
+var core = new Core('http://localhost:9000');
 console.log(core);
 
 
