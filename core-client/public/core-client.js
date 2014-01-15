@@ -239,8 +239,8 @@ EventEmitter.prototype.listeners = function(type) {
 
 })(require("__browserify_process"))
 },{"__browserify_process":1}],"core-client":[function(require,module,exports){
-module.exports=require('orlGIP');
-},{}],"orlGIP":[function(require,module,exports){
+module.exports=require('kc4t8H');
+},{}],"kc4t8H":[function(require,module,exports){
 var io = require('socket.io-client');
 var EventEmitter = require('events').EventEmitter;
 //todo: debug mode?
@@ -271,9 +271,9 @@ var Motor = function(settings){
 						id: id,
 						command: command
 					}
-					device.commands[command] = function(){
+					device.commands[command] = function(callback){
 						//console.log(message);
-						motor.io.emit('message', message);
+						motor.io.emit('message', message, callback);
 					};
 				}
 			}

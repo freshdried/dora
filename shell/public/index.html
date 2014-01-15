@@ -4,26 +4,23 @@
 <style type="text/css">
 body {
 	font-family: monospace;
-	margin: 5%;
+	margin: 10%;
+	background: #252726;
 }
 p {
 	font-weight: bold;
 }
 #buttons {
 	display: flex;
-
-	overflow: hidden;
+	height: 100%;
+	width: 100%;
 }
 #buttons div {
 	display: inline-flex;
 	width: 100%;
-	height: 10%;
-	margin: 10%;
-
-	border-style:solid;
-	border-width: 5px;
-	border-color: black;
-	background: grey;
+	height: 100%;
+	margin: 0 5%;
+	padding: 0;
 }
 </style>
 </head>
@@ -31,21 +28,40 @@ p {
 <script src="/core-client/core-client.js"></script>
 <script src="./jquery-2.0.3.min.js"></script>
 
-<p>dora<br>DOrm Room Automation</p>
 <div id="buttons">
 	<div id="a"></div>
 	<div id="b"></div>
 	<div id="c"></div>
 </div>
-<p><a href="./shell.html">shell</a></p>
 
 <script>
 var Core = require('core-client');
 var core = new Core();
 
-$("#a").click(function() { core.motor.devices.a.commands.toggle() });
-$("#b").click(function() { core.motor.devices.b.commands.toggle() });
-$("#c").click(function() { core.motor.devices.c.commands.toggle() });
+core.on('ready', function() {
+	['a', 'b', 'c'].map(function(relayid) {
+		var device = core.motor.devices[relayid];
+
+		var updateState = function(cb) {
+			device.commands.getstate(function(data) {
+				cb(data);
+			})
+		}
+		var changeModel = function(data){
+			var color = data.state == 1 ? '#ffac18' : '#000000';
+			$("#" + relayid).css({background: color});
+		}
+
+		//initialize colors
+		updateState(changeModel);
+		//on toggle
+		$("#" + relayid).click(function() {
+			device.commands.toggle();
+			updateState(changeModel);
+		});
+	});
+});
+
 </script>
 </body>
 </html>

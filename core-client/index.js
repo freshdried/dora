@@ -28,9 +28,9 @@ var Motor = function(settings){
 						id: id,
 						command: command
 					}
-					device.commands[command] = function(){
+					device.commands[command] = function(callback){
 						//console.log(message);
-						motor.io.emit('message', message);
+						motor.io.emit('message', message, callback);
 					};
 				}
 			}

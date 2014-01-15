@@ -32,7 +32,13 @@ var Device = new function(){
 		};
 
 
-		this.getstate =  function(socket){ socket.emit(state)}; //fix
+		this.getstate =  function(socket){
+			var message = {
+				name: info.name,
+				state: state
+			}
+			return message;
+		};
 		this.toggle =  function(){ write(state^1) };
 		this.on = function(){ write(1) };
 		this.off = function(){ write(0) };
@@ -61,10 +67,13 @@ var Motor = function(settings){
 			socket.emit('info', {
 				devices: devices
 			});
-			var messagehandle = function(msg){
+			var messagehandle = function(msg,callback){
 				//console.log(msg);
 				try{
-					devices [msg.id] [msg.command] (socket);
+					var returnmsg = devices [msg.id] [msg.command] ();
+					if (typeof returnmsg !== 'undefined'){
+						callback(returnmsg);
+					}
 				}catch(e){
 					console.log(e);
 				}
