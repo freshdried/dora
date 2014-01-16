@@ -3,5 +3,6 @@
 *.swp
 */.build/
 */.build/lib
+/core-client/public/core-client.js
 *.out
 

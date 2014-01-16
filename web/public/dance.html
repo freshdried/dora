@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>dora shell</title>
+<style type="text/css">
+body {
+	font-family: monospace;
+	margin: 10%;
+	background: #ffffff;
+}
+</style>
+</head>
+<body>
+<script src="/core-client/core-client.js"></script>
+<script src="./jquery-2.0.3.min.js"></script>
+
+
+<script>
+var Core = require('core-client');
+var core = new Core();
+
+core.on('ready', function() {
+	function toggle(){
+		core.motor.devices.a.commands.toggle();
+		core.motor.devices.b.commands.toggle();
+		core.motor.devices.c.commands.toggle();
+
+	}
+	toggle();
+});
+
+</script>
+</body>
+</html>
