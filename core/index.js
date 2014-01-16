@@ -6,7 +6,7 @@ var virtualserialport = require("./virtualserialport.js");
 var express = require('express');
 var app  = express();
 
-app.use('/', express.static('../shell' + '/public'));
+app.use('/', express.static('../web' + '/public'));
 app.use('/core-client', express.static('../core-client' + '/public'));
 
 var server = require('http').createServer(app);
