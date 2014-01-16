@@ -45,7 +45,7 @@ core.on('ready', function() {
 		var updateState = function(cb) {
 			device.commands.getstate(function(data) {
 				cb(data);
-			})
+			});
 		}
 		var changeModel = function(data){
 			var color = data.state == 1 ? '#ffac18' : '#000000';

@@ -43,7 +43,7 @@
 					core.motor.devices.a.commands.toggle();
 					core.motor.devices.b.commands.toggle();
 					core.motor.devices.c.commands.toggle();
-				}, 50);
+				}, 400);
 				last = now;
 			}
 		}
@@ -52,7 +52,7 @@
 		var dancer = new Dancer();
 		var kick = dancer.createKick({
 			frequency: [0,10],
-			threshold: 0.2,
+			threshold: 0.7,
 			decay: 0.03,
 			onKick: function() {
 				console.log("kick!");
