@@ -1,33 +1,72 @@
 <html>
 <head>
-<title>dora shell</title>
-<style type="text/css">
-body {
-	font-family: monospace;
-	margin: 10%;
-	background: #ffffff;
-}
-</style>
+	<title>dancing to the music</title>
+	<style type="text/css">
+		body {
+			font-family: monospace;
+			margin: 10%;
+			background: #ffffff;
+		}
+	</style>
 </head>
 <body>
-<script src="/core-client/core-client.js"></script>
-<script src="./jquery-2.0.3.min.js"></script>
+	<script src="/core-client/core-client.js"></script>
+	<script src="./jquery-2.0.3.min.js"></script>
+	<script src="./dancer.js"></script>
+
+	<audio id="audio" controls="controls">
+		<source src="test.mp3" type="audio/mpeg; codes='mp3'" />
+	</audio>
+	<form>
+		detection cutoff: <input type="number" name="cutoff" id="cutoff" value="300" min="50" max="1000"/> in milliseconds
+	</form>
 
 
-<script>
-var Core = require('core-client');
-var core = new Core();
+	<script>
 
-core.on('ready', function() {
-	function toggle(){
-		core.motor.devices.a.commands.toggle();
-		core.motor.devices.b.commands.toggle();
-		core.motor.devices.c.commands.toggle();
+	var Core = require('core-client');
+	var core = new Core();
 
-	}
-	toggle();
-});
+	core.on('ready', function() {
+		var last = (new Date()).getTime();
+		var cutofflevel = 200;
+		$("#cutoff").on('input', function() {
+			cutofflevel = $(this).val();
+		});
+		function toggle(){
+			var now = (new Date()).getTime();
+			if (now > last + cutofflevel){
+				core.motor.devices.a.commands.toggle();
+				core.motor.devices.b.commands.toggle();
+				core.motor.devices.c.commands.toggle();
+				setTimeout(function() {
+					core.motor.devices.a.commands.toggle();
+					core.motor.devices.b.commands.toggle();
+					core.motor.devices.c.commands.toggle();
+				}, 50);
+				last = now;
+			}
+		}
 
-</script>
+		var audio = $("#audio")[0];
+		var dancer = new Dancer();
+		var kick = dancer.createKick({
+			frequency: [0,10],
+			threshold: 0.2,
+			decay: 0.03,
+			onKick: function() {
+				console.log("kick!");
+				toggle();
+			},
+			offKick: function() {
+				//console.log("no kick...");
+				//toggle();
+			}
+		});
+		kick.on();
+		dancer.load(audio).play();
+	});
+
+	</script>
 </body>
 </html>
