@@ -7,6 +7,9 @@
 			margin: 10%;
 			background: #ffffff;
 		}
+		audio {
+			margin-bottom: 100px;
+		}
 	</style>
 </head>
 <body>
@@ -15,10 +18,36 @@
 	<script src="./dancer.js"></script>
 
 	<audio id="audio" controls="controls">
-		<source src="test.mp3" type="audio/mpeg; codes='mp3'" />
+		<source src="test2.mp3" type="audio/mpeg; codes='mp3'" />
+		<!--source src="http://www.controlaltdelight.com/Music/Jangbar/Earl%20Sweatshirt%20-%20Earl.mp3" type="audio/mpeg; codes='mp3'" /-->
 	</audio>
+	<!--
 	<form>
-		detection cutoff: <input type="number" name="cutoff" id="cutoff" value="300" min="50" max="1000"/> in milliseconds
+		blink length: <input type="number" id="blinklength" value="400" min="50" max="1000"/> milliseconds
+		</p>
+		<p>
+		beat min length: <input type="number" id="beatminlength" value="400" min="50" max="1000"/> milliseconds
+		</p>
+		<p>
+		kick detect threshold: <input type="number" step=0.01 id="kickdetectthreshold" value="0.5" min="0" max="1"/>
+		</p>
+		<p>
+		kick detect decay: <input type="number" step=0.01 id="kickdetectdecay" value="0.03" min="0" max="1"/>
+		</p>
+	</form>
+	</-->
+	<form>
+		blink length: <input type="number" id="blinklength" value="75" min="50" max="1000"/> milliseconds
+		</p>
+		<p>
+		beat min length: <input type="number" id="beatminlength" value="75" min="50" max="1000"/> milliseconds
+		</p>
+		<p>
+		kick detect threshold: <input type="number" step=0.01 id="kickdetectthreshold" value="0.4" min="0" max="1"/>
+		</p>
+		<p>
+		kick detect decay: <input type="number" step=0.01 id="kickdetectdecay" value="0.03" min="0" max="1"/>
+		</p>
 	</form>
 
 
@@ -29,13 +58,13 @@
 
 	core.on('ready', function() {
 		var last = (new Date()).getTime();
-		var cutofflevel = 200;
-		$("#cutoff").on('input', function() {
-			cutofflevel = $(this).val();
-		});
+
+		var blinklength = parseInt($('#blinklength').val());
+		var beatminlength = parseInt($('#beatminlength').val());
+
 		function toggle(){
 			var now = (new Date()).getTime();
-			if (now > last + cutofflevel){
+			if (now > last + beatminlength){
 				core.motor.devices.a.commands.toggle();
 				core.motor.devices.b.commands.toggle();
 				core.motor.devices.c.commands.toggle();
@@ -43,28 +72,38 @@
 					core.motor.devices.a.commands.toggle();
 					core.motor.devices.b.commands.toggle();
 					core.motor.devices.c.commands.toggle();
-				}, 400);
+				}, blinklength);
 				last = now;
 			}
 		}
+
 
 		var audio = $("#audio")[0];
 		var dancer = new Dancer();
 		var kick = dancer.createKick({
 			frequency: [0,10],
-			threshold: 0.7,
-			decay: 0.03,
+			threshold: parseFloat($("#kickdetectthreshold").val()),
+			decay: parseFloat($("#kickdetectdecay").val()),
 			onKick: function() {
-				console.log("kick!");
 				toggle();
-			},
-			offKick: function() {
-				//console.log("no kick...");
-				//toggle();
 			}
 		});
 		kick.on();
+		window.kick = kick; 
 		dancer.load(audio).play();
+
+		$("#blinklength").on('change', function() {
+			blinklength = parseInt($(this).val());
+		});
+		$("#beatminlength").on('change', function() {
+			beatminlength = parseInt($(this).val());
+		});
+		$("#kickdetectthreshold").on('change', function() {
+			kick.threshold = parseFloat($(this).val());
+		});
+		$("#kickdetectdecay").on('change', function() {
+			kick.decay = parseFloat($(this).val());
+		});
 	});
 
 	</script>
