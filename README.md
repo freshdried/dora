@@ -9,7 +9,4 @@ Javascript Domotics.
   - add dora graphic
   - add screenshots, pictures, circuit diagrams
  - make systemd script for it, gist it
-
-###Future:
- - migrate from socket.io to dnode (some simple rpc system)
-
+ - Fix issue that dancer kills dora in the middle of a song

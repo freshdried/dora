@@ -8,7 +8,7 @@
 			background: #ffffff;
 		}
 		audio {
-			margin-bottom: 100px;
+			margin: 20 0 40 0;
 		}
 	</style>
 </head>
@@ -17,25 +17,9 @@
 	<script src="./jquery-2.0.3.min.js"></script>
 	<script src="./dancer.js"></script>
 
-	<audio id="audio" controls="controls">
-		<source src="test2.mp3" type="audio/mpeg; codes='mp3'" />
-		<!--source src="http://www.controlaltdelight.com/Music/Jangbar/Earl%20Sweatshirt%20-%20Earl.mp3" type="audio/mpeg; codes='mp3'" /-->
-	</audio>
-	<!--
-	<form>
-		blink length: <input type="number" id="blinklength" value="400" min="50" max="1000"/> milliseconds
-		</p>
-		<p>
-		beat min length: <input type="number" id="beatminlength" value="400" min="50" max="1000"/> milliseconds
-		</p>
-		<p>
-		kick detect threshold: <input type="number" step=0.01 id="kickdetectthreshold" value="0.5" min="0" max="1"/>
-		</p>
-		<p>
-		kick detect decay: <input type="number" step=0.01 id="kickdetectdecay" value="0.03" min="0" max="1"/>
-		</p>
-	</form>
-	</-->
+	<h1 id="title">TITLE</h1>
+	<h2 id="artist">ARTIST</h2>
+	<div id="audiogoeshere"></div>
 	<form>
 		blink length: <input type="number" id="blinklength" value="75" min="50" max="1000"/> milliseconds
 		</p>
@@ -49,6 +33,7 @@
 		kick detect decay: <input type="number" step=0.01 id="kickdetectdecay" value="0.03" min="0" max="1"/>
 		</p>
 	</form>
+	<button id="next">next song</button>
 
 
 	<script>
@@ -56,13 +41,49 @@
 	var Core = require('core-client');
 	var core = new Core();
 
+	var songs = [
+	{
+		title: "Footworkin On Air",
+		artist: "Traxman",
+		src: "http://a.tumblr.com/tumblr_mrkhi0JBKg1sdw5mro1.mp3",
+		freqrange: [0, 10],
+		blinklength: 75,
+		beatminlength: 75,
+		kickdetectthreshold: 0.4,
+		kickdetectdecay: 0.03,
+	},
+	{
+		title: "EARL",
+		artist: "Earl Sweatshirt",
+		src: "http://www.controlaltdelight.com/Music/Jangbar/Earl%20Sweatshirt%20-%20Earl.mp3",
+		freqrange: [0, 10],
+		blinklength: 75,
+		beatminlength: 75,
+		kickdetectthreshold: 0.4,
+		kickdetectdecay: 0.03,
+	},
+	{
+		title: "Xxplosive",
+		artist: "Dr. Dre",
+		src: "http://a.tumblr.com/tumblr_m1pjvz6aRa1qhil8yo1.mp3",
+		freqrange: [0, 10],
+		blinklength: 400,
+		beatminlength: 400,
+		kickdetectthreshold: 0.7,
+		kickdetectdecay: 0.02,
+	},
+	];
+
+
 	core.on('ready', function() {
 		var last = (new Date()).getTime();
 
-		var blinklength = parseInt($('#blinklength').val());
-		var beatminlength = parseInt($('#beatminlength').val());
+	        var blinklength = parseInt($("#blinklength").val());
+		var beatminlength = parseInt($("#beatminlength").val());
 
-		function toggle(){
+
+		//Blinks the light.
+		function blink(){
 			var now = (new Date()).getTime();
 			if (now > last + beatminlength){
 				core.motor.devices.a.commands.toggle();
@@ -78,20 +99,41 @@
 		}
 
 
-		var audio = $("#audio")[0];
-		var dancer = new Dancer();
-		var kick = dancer.createKick({
-			frequency: [0,10],
-			threshold: parseFloat($("#kickdetectthreshold").val()),
-			decay: parseFloat($("#kickdetectdecay").val()),
-			onKick: function() {
-				toggle();
-			}
-		});
-		kick.on();
-		window.kick = kick; 
-		dancer.load(audio).play();
+		//Makes a new audio element for each song
+		function change(song) {
+			$('#audio').remove(); //remove previous
+			var audio = $('<audio id="audio" controls="controls" src="' + song.src + '">').appendTo('#audiogoeshere')[0];
 
+			$("#title").html(song.title);
+			$("#artist").html(song.artist);
+
+			blinklength = song.blinklength;
+			beatminlength = song.beatminlength;
+
+			var dancer = new Dancer();
+			var kick = dancer.createKick({
+				frequency: song.freqrange,
+				threshold: song.kickdetectthreshold,
+				decay: song.kickdetectdecay,
+				onKick: blink
+			});
+			kick.on();
+			dancer.load(audio);
+			dancer.play();
+			window.dancer = dancer;
+			window.kick = kick;
+
+			$("#blinklength").val(song.blinklength);
+			$("#beatminlength").val(song.beatminlength);
+			$("#kickdetectthreshold").val(song.kickdetectthreshold);
+			$("#kickdetectdecay").val(song.kickdetectdecay);
+		}
+		
+		//init
+		var i = 2;
+		change(songs[i]);
+
+		//Gui stuff
 		$("#blinklength").on('change', function() {
 			blinklength = parseInt($(this).val());
 		});
@@ -103,6 +145,10 @@
 		});
 		$("#kickdetectdecay").on('change', function() {
 			kick.decay = parseFloat($(this).val());
+		});
+		$("#next").on('click', function() {
+			change(songs[(i + 1) % songs.length]);
+			i = (i + 1) % songs.length;
 		});
 	});
 
