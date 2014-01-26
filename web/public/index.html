@@ -4,34 +4,59 @@
 <style type="text/css">
 body {
 	font-family: monospace;
-	margin: 10%;
 	background: #252726;
+	color: white;
+	font-family: monospace;
 }
 p {
 	font-weight: bold;
 }
-#buttons {
-	display: flex;
-	height: 100%;
-	width: 100%;
-}
 #buttons div {
-	display: inline-flex;
-	width: 100%;
-	height: 100%;
-	margin: 0 5%;
-	padding: 0;
+	position: fixed;
+	width: 23%;
+	height: 40%;
+	top: 40%;
+}
+
+#a {
+	left: 5%;
+}
+#b {
+	left: 38%;
+}
+#c {
+	left: 71%;
+}
+#text{
+	position: fixed;
+	left: 5%;
+	top: 5%;
+	white-space: pre;
+}
+b {
+	font-size: xx-large;
+}
+a {
+	color: #959796;
+	text-decoration: none;
 }
 </style>
 </head>
 <body>
 <script src="/core-client/core-client.js"></script>
 <script src="./jquery-2.0.3.min.js"></script>
-
 <div id="buttons">
 	<div id="a"></div>
 	<div id="b"></div>
 	<div id="c"></div>
+</div>
+<div id="text">
+<b>DORA</b>: Dorm Room Automation
+
+by Sean Lee
+
+
+[ <a href="/dance.html">dance</a> ]    [ <a href="/snake.html">snake</a> ]
 </div>
 
 <script>
