@@ -1,0 +1,101 @@
+<html>
+<head>
+	<title>snake</title>
+	<style type="text/css">
+		body {
+			font-family: monospace;
+			margin: 10%;
+			background: #ffffff;
+		}
+		audio {
+			margin: 20 0 40 0;
+		}
+	</style>
+</head>
+<body>
+	<script src="/core-client/core-client.js"></script>
+	<script src="./jquery-2.0.3.min.js"></script>
+	<button id="start">start</button>
+	<button id="welcome">welcome</button>
+	<button id="goodbye">goodbye</button>
+	<button id="breathe">breathe</button>
+
+
+	<script>
+
+	var Core = require('core-client');
+	var core = new Core();
+
+	var delay = 90;
+	core.on('ready', function() {
+		core.motor.devices.a.commands.off();
+		core.motor.devices.b.commands.off();
+		core.motor.devices.c.commands.off();
+
+
+		//Blinks the light.
+		function snake(i, reverse, cb){
+			var reverse = reverse || false;
+			if(!reverse) {
+				if (i%3 == 2) core.motor.devices.a.commands.toggle();
+				if (i%3 == 1) core.motor.devices.b.commands.toggle();
+				if (i%3 == 0) core.motor.devices.c.commands.toggle();
+
+			} else {
+				if (i%3 == 2) core.motor.devices.c.commands.toggle();
+				if (i%3 == 1) core.motor.devices.b.commands.toggle();
+				if (i%3 == 0) core.motor.devices.a.commands.toggle();
+
+			}
+
+			if (i == 0){
+				cb();
+				return;
+			}
+			setTimeout(function() {
+				snake(i -1, reverse, cb);
+			}, delay);
+		}
+
+
+		$("#start").on('click', function() {
+			snake(180);
+		});
+		$("#welcome").on('click', function() {
+			snake(2);
+		});
+		$("#goodbye").on('click', function() {
+			snake(2, true);
+		});
+		$("#breathe").on('click', function() {
+			breathdelay = 700;
+			function breathe(counter) {
+				snake(2, false, function() {
+					setTimeout(function() {
+						snake(2, true, function() {
+							if (counter == 0) return;
+							setTimeout( function() {
+								breathe(counter - 1);
+							}, breathdelay)
+						});
+					}, breathdelay);
+				});
+			}
+			breathe(10);
+		});
+	});
+	var lasttap = 0;
+
+	$(window).keypress(function(e) {
+		if (e.keyCode == 32) {
+			currtap = new Date().getTime();
+			if (lasttap != 0) {
+				delay = (currtap - lasttap)/6;
+			}
+			lasttap = currtap;
+		}
+	});
+
+	</script>
+</body>
+</html>
