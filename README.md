@@ -11,5 +11,5 @@ Javascript Domotics.
  - make systemd script for it, gist it
  - Fix issue that dancer kills dora in the middle of a song
  - Get soundcloud audio tags working for dancer
- - Make a landing page
+ - Hook up to internet
  - re-Hook up espeak
