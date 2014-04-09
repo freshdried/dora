@@ -4,8 +4,8 @@
 <style type="text/css">
 
 body {
+	transition: background-color 0.5s ease;
 	font-family: monospace;
-	background: #252726;
 	color: white;
 }
 
@@ -14,6 +14,7 @@ p {
 }
 
 #buttons div {
+	transition: background-color 0.2s ease;
 	position: fixed;
 	width: 23%;
 	height: 70%;
@@ -52,7 +53,7 @@ var Core = require('core-client');
 var core = new Core();
 
 core.on('ready', function() {
-	['a', 'b', 'c'].map(function(relayid) {
+	var Button = function(relayid) {
 		var device = core.motor.devices[relayid];
 
 		var updateState = function(cb) {
@@ -61,20 +62,64 @@ core.on('ready', function() {
 			});
 		}
 		var changeModel = function(data){
-			var color = data.state == 1 ? '#ffac18' : '#000000';
-			$("#" + relayid).css({background: color});
+			var color = data.state == 1 ? '#f2cb08' : '#000000';
+			$("#" + relayid).css({
+				"background": color,
+			});
 		}
 
 		//initialize colors
 		updateState(changeModel);
-		//on toggle
-		$("#" + relayid).click(function() {
+
+
+		this.device = device;
+		this.updateState = updateState;
+		this.changeModel = changeModel;
+
+		this.toggle = function() {
 			device.commands.toggle();
 			updateState(changeModel);
+		}
+
+		$("#" + relayid).click(this.toggle);
+
+	}
+	var a = new Button("a");
+	var b = new Button("b");
+	var c = new Button("c");
+
+	setInterval(function() {
+		a.updateState(function(data) {
+			a.changeModel(data);
+			a.state = data.state;
 		});
-		setInterval(function() {
-			updateState(changeModel);
-		}, 100);
+		b.updateState(function(data) {
+			b.changeModel(data);;
+			b.state = data.state;
+		});
+		c.updateState(function(data) {
+			c.changeModel(data);;
+			c.state = data.state;
+		});
+
+		var sum = a.state + b.state + c.state;
+		var colors = ["#000000", "#333333", "#999999", "#dddddd"];
+
+		$("body").css({"background": colors[sum]});
+	}, 100);
+
+
+	$(document).keypress(function(e) {
+		var code = e.keyCode || e.which;
+		if (code == 49){
+			a.toggle();
+		}
+		if (code == 50){
+			b.toggle();
+		}
+		if (code == 51){
+			c.toggle();
+		}
 	});
 });
 
