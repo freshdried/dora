@@ -5,4 +5,5 @@
 */.build/lib
 /core-client/public/core-client.js
 *.out
+*.mp3
 
