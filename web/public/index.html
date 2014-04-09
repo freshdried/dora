@@ -84,6 +84,9 @@ core.on('ready', function() {
 			device.commands.toggle();
 			updateState(changeModel);
 		});
+		setInterval(function() {
+			updateState(changeModel);
+		}, 100);
 	});
 });
 
