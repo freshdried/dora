@@ -1,0 +1,15 @@
+[Unit]
+Description=dora: DOrm Room Automation System
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=slee2
+ExecStart=/usr/bin/sh /home/slee2/projects/dora/start.sh
+ExecStop=/usr/bin/sh /home/slee2/projects/dora/stop.sh
+
+[Install]
+WantedBy=multi-user.target
+
+

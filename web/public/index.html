@@ -1,20 +1,17 @@
 <html>
 <head>
-<title>dora shell</title>
+<title>sean's room</title>
 <style type="text/css">
 
 body {
-	transition: background-color 0.5s ease;
+	background: black;
+	transition: background-color 0.5s;
 	font-family: monospace;
 	color: white;
 }
 
-p {
-	font-weight: bold;
-}
-
 #buttons div {
-	transition: background-color 0.2s ease;
+	transition: background-color 0.2s;
 	position: fixed;
 	width: 23%;
 	height: 70%;
@@ -29,14 +26,6 @@ p {
 }
 #c {
 	left: 71%;
-}
-
-b {
-	font-size: xx-large;
-}
-a {
-	color: #959796;
-	text-decoration: none;
 }
 </style>
 </head>
@@ -62,7 +51,7 @@ core.on('ready', function() {
 			});
 		}
 		var changeModel = function(data){
-			var color = data.state == 1 ? '#f2cb08' : '#000000';
+			var color = data.state == 1 ? '#ffc000' : '#000000';
 			$("#" + relayid).css({
 				"background": color,
 			});
@@ -103,7 +92,7 @@ core.on('ready', function() {
 		});
 
 		var sum = a.state + b.state + c.state;
-		var colors = ["#000000", "#333333", "#999999", "#dddddd"];
+		var colors = ["#000000", "#333333", "#444444", "#555555"];
 
 		$("body").css({"background": colors[sum]});
 	}, 100);
