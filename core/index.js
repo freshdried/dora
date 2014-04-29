@@ -15,7 +15,7 @@ var io = require('socket.io').listen(server);
 var events = require('events');
 
 
-var testing = (process.env.MODE != "production");
+var testing = (process.env.MODE == "testing");
 
 require('./motor')({
 	io: io.of('/motor'),

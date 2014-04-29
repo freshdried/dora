@@ -1,11 +1,5 @@
-#DORA
+#room
 
-_DO_rm _R_oom _A_utomation
+[room.sean.lee.mx](room.sean.lee.mx);
 
-Javascript Domotics.
-
-###Todo:
- - Document stuff
-  - add dora graphic
-  - add screenshots, pictures, circuit diagrams
- - re-Hook up espeak?
+<i>Only accessible on the PEA subnet</i>

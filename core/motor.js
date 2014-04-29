@@ -32,16 +32,37 @@ var Device = new function(){
 		};
 
 
-		this.getstate =  function(socket){
-			var message = {
-				name: info.name,
+		this.getstate =  function(msg, socket){
+			var output = {
+				name: msg.id,
 				state: state
-			}
-			return message;
+			};
+			socket.emit('message', output);
 		};
-		this.toggle =  function(){ write(state^1) };
-		this.on = function(){ write(1) };
-		this.off = function(){ write(0) };
+		this.toggle =  function(msg, socket){
+			write(state^1);
+			var output = {
+				name: msg.id,
+				state: state
+			};
+			socket.broadcast.emit('message', output);
+		};
+		this.on = function(msg, socket){
+			write(1);
+			var output = {
+				name: msg.id,
+				state: state
+			};
+			socket.broadcast.emit('message', output);
+		};
+		this.off = function(msg, socket){
+			write(0);
+			var output = {
+				name: msg.id,
+				state: state
+			};
+			socket.broadcast.emit('message', output);
+		};
 
 		PopulateCommands.call(this);
 	};
@@ -67,13 +88,9 @@ var Motor = function(settings){
 			socket.emit('info', {
 				devices: devices
 			});
-			var messagehandle = function(msg,callback){
-				//console.log(msg);
+			var messagehandle = function(msg){
 				try{
-					var returnmsg = devices [msg.id] [msg.command] ();
-					if (typeof returnmsg !== 'undefined'){
-						callback(returnmsg);
-					}
+					var returnmsg = devices [msg.id] [msg.command](msg, socket);
 				}catch(e){
 					console.log(e);
 				}
