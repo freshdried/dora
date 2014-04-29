@@ -60,5 +60,5 @@ require('./sensory')({
 	},
 });
 
-server.listen(9000);
-console.log('Core started at port 9000');
+server.listen(9001);
+console.log('Core started at port 9001');
