@@ -4,10 +4,10 @@ var serialport = require("serialport");
 var virtualserialport = require("./virtualserialport.js");
 
 var express = require('express');
+var connect = require('connect');
 var app  = express();
 
-app.use('/', express.static('../web' + '/public'));
-app.use('/core-client', express.static('../core-client' + '/public'));
+app.use('/', connect.static('../web' + '/public'));
 
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);

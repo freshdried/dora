@@ -1,5 +1,5 @@
 {
 	"name": "core",
 	"private": true,
-	"dependencies": ["express", "socket.io", "serialport"]
+	"dependencies": ["connect", "express", "socket.io", "serialport"]
 }
