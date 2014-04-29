@@ -1,3 +1,5 @@
+var testing = (process.env.MODE == "testing");
+
 var Sensory = require('./sensory')
 
 var serialport = require("serialport");
@@ -10,12 +12,14 @@ var app  = express();
 app.use('/', connect.static('../web' + '/public'));
 
 var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
+
+var io;
+if (testing) io = require('socket.io').listen(server);
+else io = require('socket.io').listen(server, {log: false});
 
 var events = require('events');
 
 
-var testing = (process.env.MODE == "testing");
 
 require('./motor')({
 	io: io.of('/motor'),

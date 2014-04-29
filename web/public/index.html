@@ -42,6 +42,12 @@ var Core = require('core-client');
 var core = new Core();
 
 core.on('ready', function() {
+	function changeBackground() {
+		var sum = buttons.a.getstate() + buttons.b.getstate() + buttons.c.getstate();
+		var colors = ["#000000", "#333333", "#444444", "#555555"];
+		$("body").css({"background": colors[sum]});
+	}
+
 	var Button = function(relayid) {
 		var device = core.motor.devices[relayid];
 		var state = 0;
@@ -52,6 +58,7 @@ core.on('ready', function() {
 			$("#" + relayid).css({
 				"background": color,
 			});
+			changeBackground();
 		}
 		this.getstate = function(){ return state };
 		this.askstate = device.commands.getstate;
@@ -69,9 +76,6 @@ core.on('ready', function() {
 			var button = buttons[msg.name];
 			button.update(msg.state);
 		} catch(e){console.error(e)};
-		var sum = buttons.a.getstate() + buttons.b.getstate() + buttons.c.getstate();
-		var colors = ["#000000", "#333333", "#444444", "#555555"];
-		$("body").css({"background": colors[sum]});
 	});
 
 	var buttons = {
