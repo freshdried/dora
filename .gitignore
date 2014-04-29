@@ -6,4 +6,4 @@
 */core-client.js
 *.out
 *.mp3
-
+*.ipc
