@@ -10,7 +10,11 @@ var zmq = require('zmq');
 var dealer = zmq.socket('dealer');
 var dealerport = 'ipc:///tmp/lights-lights.ipc';
 
+var sub = zmq.socket('sub');
+var subport = 'ipc:///tmp/lights-lights-pub.ipc';
+
 dealer.connect(dealerport);
+sub.connect(subport);
 console.log("connected to port", dealerport);
 
 var app = require('express')();
@@ -31,10 +35,18 @@ io.sockets.on('connection', function(socket) {
 });
 
 dealer.on('message', function(data){
-	console.log('lights-client> received from lights-serial-client:', JSON.parse(data));
+	console.log('lights-client> received from lights-lights:', JSON.parse(data));
 	io.sockets.emit('message', JSON.parse(data));
 
 });
+
+sub.subscribe('');
+sub.on('message', function(data) {
+	console.log('lights-client> received from lights-lights-pub:', JSON.parse(data));
+	io.sockets.emit('message', JSON.parse(data));
+});
+
+
 
 
 server.listen(9001);
