@@ -8,7 +8,7 @@
  */
 var zmq = require('zmq');
 var dealer = zmq.socket('dealer');
-var dealerport = 'ipc://lights-lights.ipc';
+var dealerport = 'ipc:///tmp/lights-lights.ipc';
 
 dealer.connect(dealerport);
 console.log("connected to port", dealerport);

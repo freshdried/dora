@@ -11,10 +11,10 @@
 
 var zmq = require('zmq');
 var dealer = zmq.socket('dealer');
-var dealerport = 'ipc://lights-serial.ipc'
+var dealerport = 'ipc:///tmp/lights-serial.ipc';
 
 var router = zmq.socket('router');
-var routerport = 'ipc://lights-lights.ipc'
+var routerport = 'ipc:///tmp/lights-lights.ipc';
 
 
 dealer.connect(dealerport);
