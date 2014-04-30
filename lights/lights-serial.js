@@ -1,3 +1,11 @@
+/*
+ * lights-serial.js
+ *
+ * provides zmq socket (router) interface for serialport
+ *
+ * Outputs to serialport only. Does not read from serialport.
+ *
+ */
 var zmq = require('zmq');
 var SerialPort = require('serialport').SerialPort;
 
@@ -11,7 +19,7 @@ sp.on("open", function() {
 	console.log("Serial Port opened on ", spname);
 	router.bind(routerport, function(err) {
 		router.on('message', function(envelope, data) {
-			console.log('received:', data);
+			console.log('lights-serial> received from bridge:', data);
 			sp.write(data);
 
 			// //don't send back anything
