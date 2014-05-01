@@ -1,5 +1,5 @@
 ##lights
 
 ###todo
-- Remove bridge
 - link remote control
+- hook up to automation system

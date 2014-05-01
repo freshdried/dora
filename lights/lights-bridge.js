@@ -19,6 +19,13 @@ var routerport = 'ipc:///tmp/lights-lights.ipc';
 var pub = zmq.socket('pub');
 var pubport ='ipc:///tmp/lights-lights-pub.ipc';
 
+var app = require('express')();
+var serveStatic = require('serve-static');
+app.use(serveStatic(__dirname + '/public'));
+
+var server = require('http').Server(app);
+var io = require('socket.io').listen(server);
+
 
 dealer.connect(dealerport);
 console.log("connected to port ", dealerport);
@@ -49,6 +56,7 @@ function start(err) {
 				state: state
 			}
 			pub.send(JSON.stringify(msg));
+			io.sockets.emit('message', msg);
 		}
 
 
@@ -62,13 +70,8 @@ function start(err) {
 			changeState(state^1);
 		}
 
-		this.getState = function(envelope, output) {
-			var msg = {
-				id: id,
-				state: state
-			}
-			router.send([envelope, output]);
-			console.log('lights-bridge> returning:', output);
+		this.getState = function() {
+			return state;
 		}
 		console.log("Light %s initialized!", id);
 	}
@@ -82,10 +85,26 @@ function start(err) {
 	router.on("message", function(envelope, data) {
 		try {
 			var obj = JSON.parse(data);
-			console.log('lights-bridge> received from lights-client:', obj);
-			light[obj.id][obj.command](envelope, data);
+			console.log('lights-bridge> received from ' + envelope +' via zmq: '+ obj);
+			var outmsg = light[obj.id][obj.command]();
+			if (outmsg) router.send(envelope, JSON.stringify(outmsg));
 		} catch(e) {console.log(e);};
 	});
+
+
+	//socket.io/web stuff
+
+	io.sockets.on('connection', function(socket) {
+		socket.on('command', function(data, callback) {
+			console.log('lights-client> Received:', data);
+			try {
+				console.log('lights-client> received from socket-io:', data);
+				var outmsg = light[data.id][data.command]();
+				if (outmsg) callback(outmsg);
+			} catch(e) {console.log(e)};
+		});
+	});
+	server.listen(9001);
 }
 
 

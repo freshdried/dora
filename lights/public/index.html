@@ -12,6 +12,7 @@ body {
 
 #buttons div {
 	transition: background-color 0.2s;
+	background: #000000;
 	position: fixed;
 	width: 23%;
 	height: 70%;
@@ -60,17 +61,14 @@ body {
 		this.on = function() {
 			var msg = { id: id, command: 'on'};
 			socket.emit('command', msg);
-			changeState(1);
 		}
 		this.off = function() {
 			var msg = { id: id, command: 'off'};
 			socket.emit('command', msg);
-			changeState(0);
 		}
 		this.toggle = function() {
 			var msg = { id: id, command: 'toggle'};
 			socket.emit('command', msg);
-			changeState(state^1);
 		}
 
 		this.getState = function() {
@@ -78,14 +76,16 @@ body {
 		}
 		this.askState = function() {
 			var msg = { id: id, command: 'getState'};
-			socket.emit('command', msg);
+			socket.emit('command', msg, function(returnmsg){
+				changeState(returnmsg);
+			});
 		}
 		this.changeState = changeState;
 
 		$DOMnode.on('click', this.toggle);
 		console.log("Light %s initialized!", id);
 	};
-	var light = [];
+	light = [];
 	for (var i = 0; i < 3; i ++) {
 		light[i] = new Light(i);
 		light[i].askState();
@@ -122,6 +122,7 @@ body {
 
 	socket.on('message', function (data) {
 		try{
+			console.log("received from socket.io:", data)
 			light[data.id].changeState(data.state);
 		} catch(e){console.log(e)}
 	});
