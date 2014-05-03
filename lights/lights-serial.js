@@ -11,6 +11,7 @@ var SerialPort = require('serialport').SerialPort;
 
 var router = zmq.socket('router');
 var routerport = 'ipc:///tmp/lights-serial.ipc';
+var routerport = 'tcp:///127.0.0.1:10001';
 
 var spname = '/dev/ttyACM0';
 var sp = new SerialPort(spname);
