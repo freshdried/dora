@@ -11,17 +11,17 @@
 
 var zmq = require('zmq');
 var dealer = zmq.socket('dealer');
-var dealerport = 'ipc:///tmp/lights-serial.ipc';
-var dealerport = 'tcp:///127.0.0.1:10001';
+//var dealerport = 'ipc:///tmp/lights-serial.ipc';
+var dealerport = 'tcp://127.0.0.1:10001';
 
 
 var router = zmq.socket('router');
-var routerport = 'ipc:///tmp/lights-lights.ipc';
-var routerport = 'tcp:///127.0.0.1:10002';
+//var routerport = 'ipc:///tmp/lights-lights.ipc';
+var routerport = 'tcp://127.0.0.1:10002';
 
 var pub = zmq.socket('pub');
-var pubport ='ipc:///tmp/lights-lights-pub.ipc';
-var pubport = 'tcp:///127.0.0.1:10003';
+//var pubport ='ipc:///tmp/lights-lights-pub.ipc';
+var pubport = 'tcp://127.0.0.1:10003';
 
 
 var app = require('express')();
@@ -109,7 +109,7 @@ function start(err) {
 			} catch(e) {console.log(e)};
 		});
 	});
-	server.listen(9001);
+	server.listen(9005);
 }
 
 
