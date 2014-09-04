@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>sean's room</title>
+<style type="text/css">
+
+body {
+	background: black;
+	transition: background-color 0.5s;
+	font-family: monospace;
+	color: white;
+}
+
+#buttons div {
+	transition: background-color 0.2s;
+	background: #000000;
+	position: fixed;
+	width: 23%;
+	height: 70%;
+	top: 15%;
+}
+</style>
+</head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/jquery-2.0.3.min.js"></script>
+<script>
+	//var socket = io.connect("http://room.sean.lee.mx");
+	var socket = io.connect("127.0.0.1");
+
+
+
+	$(document).mousemove(function(event){
+		var val = Math.floor(event.pageY/document.body.clientHeight * 128);
+		var msg = {
+			id: 0,
+			command: 'setState',
+			value: val
+		};
+		socket.emit('command', msg);
+	});
+	setInterval(function() {
+	}, 1000); 
+
+/*
+	socket.on('message', function (data) {
+		try{
+			console.log("received from socket.io:", data)
+			light[data.id].changeState(data.state);
+		} catch(e){console.log(e)}
+	});
+*/
+</script>
+
+</script>
+</body>
+</html>

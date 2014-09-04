@@ -2,9 +2,9 @@
 
 [room.sean.lee.mx](http://room.sean.lee.mx)
 
-<i>Only accessible on the PEA subnet</i>
+##haha I have to clean up and redesign and stuff
 
-##design tenets
-- loose coupling
-- don't overabstract, i.e. keep wires visible
-- kill one bird with one stone
+###todo:
+- upload
+- yadada
+- make a universal zmq arduino talker-tooer (that's two way!)

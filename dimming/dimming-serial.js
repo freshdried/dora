@@ -13,7 +13,7 @@ var router = zmq.socket('router');
 //var routerport = 'ipc:///tmp/lights-serial.ipc';
 var routerport = 'tcp://127.0.0.1:10001';
 
-var spname = '/dev/ttyUSB0';
+var spname = '/dev/ttyUSB1';
 var sp = new SerialPort(spname);
 
 sp.on("open", function() {

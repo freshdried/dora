@@ -42,49 +42,37 @@ router.bind(routerport, function(err){
 
 function start(err) {
 	if (err) throw err;
-	var Light = function(id) {
+	var Dimmable = function(id) {
 		var id = id;
-		var state = 0;
+		var state = 128;
 
-		function changeState(newState) {
+		this.setState = function(value) {
 			var buf = new Buffer(1);
-			buf[0] = (id<<1) + newState;
+			buf[0] = (id<<7) + value;
 			dealer.send(buf);
 			console.log('lights-bridge> Sent:', buf);
-			state = newState;
+			state = value;
 			publishState();
+		}
+		this.getState = function() {
+			return state;
 		}
 
 		function publishState() {
 			var msg = {
 				id: id,
-				state: state
+				state: state 
 			}
 			pub.send(JSON.stringify(msg));
 			io.sockets.emit('message', msg);
 		}
 
-
-		this.on = function() {
-			changeState(1);
-		}
-		this.off = function() {
-			changeState(0);
-		}
-		this.toggle = function() {
-			changeState(state^1);
-		}
-
-		this.getState = function() {
-			return state;
-		}
 		console.log("Light %s initialized!", id);
 	}
 
-	var light = [];
-	for (var i = 0; i< 3; i ++) {
-		light[i] = new Light(i);
-		light[i].off();
+	var dimmable = [];
+	for (var i = 0; i< 1; i ++) {
+		dimmable [i] = new Dimmable(i);
 	}
 
 	router.on("message", function(envelope, data) {
@@ -104,7 +92,7 @@ function start(err) {
 			console.log('lights-client> Received:', data);
 			try {
 				console.log('lights-client> received from socket-io:', data);
-				var outmsg = light[data.id][data.command]();
+				var outmsg = dimmable[data.id][data.command](data.value);
 				if (outmsg) callback(outmsg);
 			} catch(e) {console.log(e)};
 		});
