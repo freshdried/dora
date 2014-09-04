@@ -24,10 +24,7 @@ body {
 <script src="/socket.io/socket.io.js"></script>
 <script src="/jquery-2.0.3.min.js"></script>
 <script>
-	//var socket = io.connect("http://room.sean.lee.mx");
-	var socket = io.connect("127.0.0.1");
-
-
+	var socket = io.connect("http://room.sean.lee.mx");
 
 	$(document).mousemove(function(event){
 		var val = Math.floor(event.pageY/document.body.clientHeight * 128);
