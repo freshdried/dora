@@ -1,7 +1,0 @@
-{
-	"name": "core-client",
-	"private": true,
-	"dependencies": {
-		"socket.io-client": "*"
-	}
-}
