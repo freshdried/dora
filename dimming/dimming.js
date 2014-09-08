@@ -13,9 +13,11 @@ var io = require('socket.io').listen(server);
 dealer.connect('ipc:///tmp/dimming.router.ipc');
 io.sockets.on('connection', function(socket) {
 	socket.on('message', function(data, callback) {
-		console.log(data);
-		//dealer.send(data);
+		console.log('Received from socket.io: '+  data);
+		var buf = new Buffer([data]);
+		dealer.send(buf);
 	});
 });
 
 server.listen(9005);
+
