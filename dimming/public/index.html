@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>sean's room</title>
 <style type="text/css">
 
@@ -41,6 +42,17 @@ var Throttle = function(timeout){
 	}
 }
 var socketthrottle = new Throttle(50);
+
+document.body.addEventListener('touchmove', function(event) {
+	event.preventDefault();
+	if (event.targetTouches.length == 1) {
+		var touch = event.targetTouches[0];
+		var val = Math.floor(touch.pageY/document.body.clientHeight * 128);
+		socketthrottle(function() {
+			socket.emit('message', val);
+		});
+	}
+}, false);
 
 $(document).mousemove(function(event){
 	var val = Math.floor(event.pageY/document.body.clientHeight * 128);
