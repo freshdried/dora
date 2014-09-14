@@ -1,0 +1,8 @@
+{
+	"name": "dimming-simulation",
+	"main": "index.html",
+	"window": {
+		"toolbar" : false,
+		"frame": false
+	}
+}
