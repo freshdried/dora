@@ -25,8 +25,8 @@ body {
 <script src="/socket.io/socket.io.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-var socket = io.connect("http://127.0.0.1:9005");
-//var socket = io.connect("http://room.sean.lee.mx");
+//var socket = io.connect("http://127.0.0.1:9005");
+var socket = io.connect("http://room.sean.lee.mx");
 
 var Throttle = function(timeout){
 	var timeout =  timeout || 50
