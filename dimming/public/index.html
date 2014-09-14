@@ -5,31 +5,36 @@
 <style type="text/css">
 
 body {
-	background: black;
+	background-color: white;
 	transition: background-color 0.5s;
 	font-family: monospace;
-	color: white;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }
 
-#buttons div {
+#light {
 	transition: background-color 0.2s;
-	background: #000000;
+	background-color: black;
 	position: fixed;
-	width: 23%;
-	height: 70%;
-	top: 15%;
+	width: 60%;
+	height: 60%;
+	top: 20%;
+	left: 20%;
+
 }
 </style>
 </head>
 <body>
 <script src="/socket.io/socket.io.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="light"></div>
 <script>
-//var socket = io.connect("http://127.0.0.1:9005");
-var socket = io.connect("http://room.sean.lee.mx");
+var socket = io.connect("http://127.0.0.1:9005");
+//var socket = io.connect("http://room.sean.lee.mx");
 
 var Throttle = function(timeout){
-	var timeout =  timeout || 50
+	var timeout =  timeout || 50;
 	var free = true;
 	return function(fn) {
 		if (free){
@@ -41,29 +46,37 @@ var Throttle = function(timeout){
 		}
 	}
 }
+
 var socketthrottle = new Throttle(50);
 
-document.body.addEventListener('touchmove', function(event) {
+var $light = $('#light');
+
+/*
+$light[0].addEventListener('touchmove', function(event) {
 	event.preventDefault();
 	if (event.targetTouches.length == 1) {
 		var touch = event.targetTouches[0];
-		var val = Math.floor(touch.pageY/document.body.clientHeight * 128);
-		socketthrottle(function() {
-			socket.emit('message', val);
-		});
+		var val = Math.floor((touch.pageY - $light.offset().top)/document.body.clientHeight * 128);
+		$light.trigger('setState', val);
 	}
 }, false);
+*/
 
-$(document).mousemove(function(event){
-	var val = Math.floor(event.pageY/document.body.clientHeight * 128);
+$light.mousemove(function(event){
+	var val = Math.floor((event.pageY - $light.offset().top)/$light.height()* 128);
+	console.log(val);
+
+	$light.trigger('setState', val);
+});
+
+$light.on('setState', function(event, val) {
+	console.log("setting state to", val);
 	socketthrottle(function() {
-		socket.emit('message', val);
+		socket.emit('setState', val);
 	});
 });
 
-
 </script>
 
-</script>
 </body>
 </html>

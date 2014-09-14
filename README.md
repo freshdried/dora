@@ -8,6 +8,7 @@ a design exercise in distributed domotics.
 
 
 ###todo:
+- clean up, implement state updating
 - use bootstrap in remote
 - create a device registrar (upward publish)
 	- design protocol?
