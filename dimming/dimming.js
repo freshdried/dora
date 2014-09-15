@@ -28,6 +28,7 @@ var Light = function() {
 		this.emit('changeState', i);
 	}
 	this.getState = function(callback){
+		//TODO: do not explode if callback is undefined
 		callback(state);
 	}
 
