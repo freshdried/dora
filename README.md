@@ -12,4 +12,7 @@ a design exercise in distributed domotics.
 - fix dimming api so 0 is off and 127 is on
 - use bootstrap in remote
 - create a device registrar (upward publish)
+	- distributed?
+		- https://en.wikipedia.org/wiki/Service-oriented_architecture
 	- design protocol?
+
