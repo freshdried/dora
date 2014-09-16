@@ -16,3 +16,9 @@ a design exercise in distributed domotics.
 		- https://en.wikipedia.org/wiki/Service-oriented_architecture
 	- design protocol?
 
+- make front-facing website
+	- ec2?
+		- how to connect with local server instance?
+			- nat traversal? make local server a special class of client? ZMQ!
+				- (local dealer socket) publish to (ec2 router socket)
+- security!
