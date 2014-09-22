@@ -31,7 +31,9 @@ body {
 <div id="light"></div>
 <script>
 //var socket = io.connect("http://127.0.0.1:9005");
-var socket = io.connect("http://room.sean.lee.mx");
+//var socket = io.connect("http://room.sean.lee.mx");
+//var socket = io.connect("http://ec2.sean.lee.mx");
+var socket = io.connect("http://ec2-54-236-186-16.compute-1.amazonaws.com");
 
 var Throttle = function(timeout){
 	var timeout =  timeout || 50;
